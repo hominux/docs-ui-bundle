@@ -39,5 +39,4 @@ Add the image, then add the component name to that partial.
 
 ## License
 
-MPL-2.0, see `LICENSE`. The clipboard icon comes from the Adwaita icon theme (GNOME Project),
-licensed CC-BY-SA-3.0, see `LICENSES/CC-BY-SA-3.0.txt`.
+MPL-2.0, see `LICENSE`. The icon set in `src/img/octicons-16.svg` comes from GitHub Octicons, licensed MIT.
