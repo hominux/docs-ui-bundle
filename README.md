@@ -1,56 +1,43 @@
-# Compress4J docs UI bundle
+# Hominux docs UI bundle
 
-Antora UI for the Compress4J documentation site.
+Antora UI bundle for the Hominux documentation site (Compress4J, Pact Avro Plugin).
 
-This is a fork of [fedora/docs/docs-website/ui-bundle](https://gitlab.com/fedora/docs/docs-website/ui-bundle)
-(itself derived from [`@antora/ui-default`](https://gitlab.com/antora/antora-ui-default)),
-rebranded for Compress4J (logo, footer, contributing link; the color palette is inherited from the ZirekHQ fork).
+It is a fork of [antora-ui-spring](https://github.com/spring-io/antora-ui-spring), rebranded with the Hominux
+palette, header, footer, component logos, and lunr search. The fork keeps the upstream MPL-2.0 license (see `LICENSE`).
 
-## How to use it with Antora
-
-Add the following configuration in your Antora playbook:
+## Use it in a playbook
 
 ```yaml
 ui:
   bundle:
-    url: https://github.com/compress4j/docs-ui-bundle/releases/download/latest/ui-bundle.zip
+    url: https://github.com/hominux/docs-ui-bundle/releases/download/latest/ui-bundle.zip
     snapshot: true
 ```
 
-## Build and preview the UI
-
-### Local development with [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+## Build
 
 ```
-$ git clone https://github.com/compress4j/docs-ui-bundle.git
-$ cd docs-ui-bundle
-$ npm install
+$ npm ci --ignore-scripts
+$ npm rebuild gifsicle optipng-bin jpegtran-bin
+$ npx gulp bundle
 ```
 
-Build the UI bundle:
+The bundle lands in `build/ui-bundle.zip`. Pushes to `main` publish it as the `latest` release asset above.
 
-```
-$ npx gulp
-```
-
-Or build and preview with live reload:
+## Preview
 
 ```
 $ npx gulp preview
 ```
 
-Preview it on [localhost:5252](http://localhost:5252).
+Open [localhost:5252](http://localhost:5252).
 
-The generated bundle can be found in `build/ui-bundle.zip`. On push to `main`, CI
-publishes this as the `latest` GitHub Release asset at the URL above.
+## Component logos
 
-### License
+The nav title and the version modal show a logo per component. Logos live in `src/img/<component-name>-logo.png`
+(for example `compress4j-logo.png`), and `src/partials/component-logo.hbs` lists the component names that have one.
+Add the image, then add the component name to that partial.
 
-Most source code for the project is licensed under the
-Mozilla License 2.0 (MPL-2.0).
-A copy can be found in the `./LICENSE` file.
+## License
 
-The clipboard icon comes from the Adwaita icon theme,
-courtesy of the GNOME Project https://gnome.org/.
-License: Creative Commons Attribution Share-Alike 3.0 (CC-BY-SA-3.0).
-A copy can be found in `./LICENSES/CC-BY-SA-3.0.txt`.
+MPL-2.0, see `LICENSE`. The icon set in `src/img/octicons-16.svg` comes from GitHub Octicons, licensed MIT.
