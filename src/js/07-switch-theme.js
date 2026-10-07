@@ -36,6 +36,10 @@
   }
 
   function saveTheme (theme) {
-    if (window.localStorage) window.localStorage.setItem('theme', theme)
+    try {
+      window.localStorage.setItem('theme', theme)
+    } catch {
+      // storage can be blocked or full; the theme still applies for this page view
+    }
   }
 })()

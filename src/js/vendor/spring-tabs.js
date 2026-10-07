@@ -56,7 +56,9 @@
     const content = blockElement.querySelectorAll('.content').item(0)
     const colist = nextSibling(blockElement, '.colist')
     if (colist) content.append(colist)
-    const tabElement = createElementFromHtml('<div class="tab">' + title + '</div>')
+    const tabElement = document.createElement('div')
+    tabElement.className = 'tab'
+    tabElement.textContent = title
     tabElement.dataset.blockName = title
     content.dataset.blockName = title
     tabsElement.append(tabElement)

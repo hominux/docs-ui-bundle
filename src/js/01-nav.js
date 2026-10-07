@@ -60,13 +60,13 @@
     })
   }
 
-  document.querySelector('#browse-version').addEventListener('click', function () {
+  listen('#browse-version', 'click', function () {
     MicroModal.show('modal-versions', {
       disableScroll: true,
     })
   })
 
-  document.querySelector('#nav-collapse-toggle').addEventListener('click', function () {
+  listen('#nav-collapse-toggle', 'click', function () {
     if (isNavOpen) {
       document.body.classList.add('nav-sm')
     } else {
@@ -76,10 +76,20 @@
     isNavOpen = !isNavOpen
   })
 
+  function listen (selector, type, handler) {
+    const el = document.querySelector(selector)
+    if (el) el.addEventListener(type, handler)
+  }
+
   function resolveHash () {
     var hash = window.location.hash
     if (!hash) return undefined
-    return hash.indexOf('%') ? decodeURIComponent(hash) : hash
+    if (!hash.includes('%')) return hash
+    try {
+      return decodeURIComponent(hash)
+    } catch {
+      return hash
+    }
   }
 
   function navLinkForSection (node) {
@@ -201,7 +211,7 @@
     document.documentElement.style.setProperty('--nav-width', `${width}px`)
     if (window.localStorage) window.localStorage.setItem('nav-width', `${width}`)
   }
-  document.querySelector('.nav-resize').addEventListener('mousedown', (event) => {
+  listen('.nav-resize', 'mousedown', (event) => {
     document.addEventListener('mousemove', resize, false)
     document.addEventListener(
       'mouseup',

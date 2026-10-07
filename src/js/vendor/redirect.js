@@ -15,6 +15,7 @@
     if (candidates) {
       for (const candidate of candidates.children) {
         const anchorElement = candidate.querySelector('a')
+        if (!anchorElement) continue
         if (anchorElement.text === pageAndFragment) foundForPageAndFragment = anchorElement.href
         if (anchorElement.text === fragment) foundForFragment = anchorElement.href
       }
