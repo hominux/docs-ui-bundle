@@ -3,7 +3,7 @@
 const metadata = require('undertaker/lib/helpers/metadata')
 const { watch } = require('gulp')
 
-module.exports = ({ name, desc, opts, call: fn, loop }) => {
+module.exports = function createTask ({ name, desc, opts, call: fn, loop }) {
   if (name) {
     const displayName = fn.displayName
     if (displayName === '<series>' || displayName === '<parallel>') {

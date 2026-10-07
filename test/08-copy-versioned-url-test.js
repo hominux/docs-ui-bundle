@@ -3,13 +3,13 @@
 
 const { expect } = require('./harness')
 
-describe('08-copy-versioned-url', () => {
-  const run = function () {
-    const module = '../src/js/08-copy-versioned-url.js'
-    delete require.cache[require.resolve(module)]
-    require(module)
-  }
+function run () {
+  const module = '../src/js/08-copy-versioned-url.js'
+  delete require.cache[require.resolve(module)]
+  require(module)
+}
 
+describe('08-copy-versioned-url', () => {
   let versionedUrl
   let button
   let timeout
@@ -131,52 +131,22 @@ describe('08-copy-versioned-url', () => {
     expect(clipboard.content).eqls(versionedUrl)
   })
 
-  it('hash is simple', async () => {
-    const hash = '#welcome'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl + hash)
-  })
+  const hashCases = [
+    ['is simple', '#welcome', true],
+    // spring boot does this
+    ['contains .', '#topic.subtopic', true],
+    ['contains -', '#topic-subtopic', true],
+    ['contains _', '#topic_subtopic', true],
+    ['contains number', '#topic1_subtopic2', true],
+    ['contains invalid', '#topic<script', false],
+  ]
 
-  // spring boot does this
-  it('hash contains .', async () => {
-    const hash = '#topic.subtopic'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl + hash)
-  })
-
-  it('hash contains -', async () => {
-    const hash = '#topic-subtopic'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl + hash)
-  })
-
-  it('hash contains _', async () => {
-    const hash = '#topic_subtopic'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl + hash)
-  })
-
-  it('hash contains number', async () => {
-    const hash = '#topic1_subtopic2'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl + hash)
-  })
-
-  it('hash contains invalid', async () => {
-    const hash = '#topic<script'
-    window.location.hash = hash
-    run()
-    button.click()
-    expect(clipboard.content).eqls(versionedUrl)
+  hashCases.forEach(([title, hash, accepted]) => {
+    it(`hash ${title}`, async () => {
+      window.location.hash = hash
+      run()
+      button.click()
+      expect(clipboard.content).eqls(accepted ? versionedUrl + hash : versionedUrl)
+    })
   })
 })

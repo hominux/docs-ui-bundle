@@ -3,10 +3,10 @@
 const log = require('fancy-log')
 const PluginError = require('plugin-error')
 const prettierEslint = require('prettier-eslint')
-const { Transform } = require('stream')
+const { Transform } = require('node:stream')
 const map = (transform) => new Transform({ objectMode: true, transform })
 
-module.exports = () => {
+module.exports = function gulpPrettierEslint () {
   const report = { changed: 0, unchanged: 0 }
   return map(format).on('finish', () => {
     if (report.changed > 0) {

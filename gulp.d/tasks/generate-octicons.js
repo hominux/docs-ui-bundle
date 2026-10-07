@@ -1,8 +1,8 @@
 'use strict'
 
 const octicons = require('@primer/octicons')
-const ospath = require('path')
-const fs = require('fs')
+const ospath = require('node:path')
+const fs = require('node:fs')
 
 const icons = [
   'alert',
@@ -28,7 +28,7 @@ const icons = [
   'x',
 ]
 
-const pathRegex = /<svg .+?>(.*)<\/svg>/m
+const pathRegex = /<svg [^>]+>(.*)<\/svg>/
 
 const preamble = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 208">
   <title>Octicons</title>
@@ -81,4 +81,6 @@ function generateOcticons (cb) {
   cb()
 }
 
-module.exports = () => generateOcticons
+module.exports = function generateOcticonsTask () {
+  return generateOcticons
+}

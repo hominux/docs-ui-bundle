@@ -5,9 +5,9 @@ process.env.NODE_ENV = 'test'
 
 const chai = require('chai')
 const fsp = require('node:fs/promises')
-const http = require('http')
-const ospath = require('path')
-const { once } = require('events')
+const http = require('node:http')
+const ospath = require('node:path')
+const { once } = require('node:events')
 
 chai.use(require('chai-fs'))
 chai.use(require('chai-spies'))
