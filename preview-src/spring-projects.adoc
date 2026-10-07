@@ -1,4 +1,0 @@
-= Spring Projects
-:page-article: spring-projects
-
-This won't be displayed because we override the article

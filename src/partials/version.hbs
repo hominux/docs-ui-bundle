@@ -12,7 +12,7 @@
                     {{#each (versionTree site.components @root.page)}}
                       <li class="component">
                         <div>
-                          <a class="title" href="{{{relativize ./url}}}">{{{./title}}}</a>
+                          <a class="title" href="{{{relativize ./url}}}">{{> component-logo name=./name class="nav-component-logo"}}{{{./title}}}</a>
                         </div>
 
                         
@@ -55,9 +55,6 @@
                       </li>
                     {{/each}}
                   </ul>
-                </div>
-                <div class="col-right">
-                  {{> related-projects}}
                 </div>
               </div>
             </main>

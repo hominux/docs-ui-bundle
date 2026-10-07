@@ -441,3 +441,20 @@ body.nav-sm .nav-panel-menu {
     border-right: 1px solid var(--nav-panel-divider-color);
   }
 }
+
+.nav-title-link,
+.nav-versions .title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-title-link {
+  color: inherit;
+}
+
+.nav-component-logo {
+  height: 1.4rem;
+  width: auto;
+  border-radius: 0.2rem;
+}

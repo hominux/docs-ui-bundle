@@ -1,5 +1,5 @@
 <div class="context">
-  <span class="title">{{page.component.title}}</span>
+  <span class="title"><a class="nav-title-link" href="{{{relativize page.component.url}}}">{{> component-logo name=page.component.name class="nav-component-logo"}}{{page.component.title}}</a></span>
   <span class="version">{{page.componentVersion.displayVersion}}</span>
   <button class="browse-version" id="browse-version">
     <svg
