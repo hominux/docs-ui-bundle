@@ -137,13 +137,13 @@ function bundle ({ base: basedir, ext: bundleExt = '.bundle.js' }) {
             bumpMtime(file.stat, newestMtime(mtimes, file.stat.mtime))
             if (bundleBuffer !== undefined) file.contents = bundleBuffer
             next(bundleError, Object.assign(file, { path: file.path.slice(0, file.path.length - 10) + '.js' }))
-          })
+          }, next)
         )
       return
     }
     fsp.readFile(file.path, 'UTF-8').then((contents) => {
       next(null, Object.assign(file, { contents: Buffer.from(contents) }))
-    })
+    }, next)
   })
 }
 

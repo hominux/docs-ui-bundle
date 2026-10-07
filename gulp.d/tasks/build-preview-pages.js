@@ -43,7 +43,7 @@ module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, s
       .then(([baseUiModel, layouts]) =>
         vfs
           .src('**/*.adoc', { base: previewSrc, cwd: previewSrc })
-          .pipe(map((file, enc, next) => loadUiModelForPage(file.path).then((page) => next(null, { file, page }))))
+          .pipe(map((file, enc, next) => loadUiModelForPage(file.path).then((page) => next(null, { file, page }), next)))
           .pipe(
             map(({ file, page = {} }, enc, next) => {
               const siteRootPath = path.relative(ospath.dirname(file.path), ospath.resolve(previewSrc))
@@ -90,9 +90,12 @@ function loadSampleUiModel (src) {
 
 function loadUiModelForPage (srcPath) {
   srcPath += '.yml'
-  return fsp.readFile(srcPath).then(
-    (contents) => yaml.load(contents),
-    () => undefined
+  return fsp.readFile(srcPath, 'utf8').then(
+    (contents) => yaml.load(contents, { filename: srcPath }),
+    (err) => {
+      if (err.code === 'ENOENT') return undefined
+      throw err
+    }
   )
 }
 

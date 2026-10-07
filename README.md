@@ -18,6 +18,7 @@ ui:
 
 ```
 $ npm ci --ignore-scripts
+$ npm rebuild gifsicle optipng-bin jpegtran-bin
 $ npx gulp bundle
 ```
 

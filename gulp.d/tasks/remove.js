@@ -12,5 +12,5 @@ module.exports = function removeTask (files) {
 }
 
 function rm (path, cb) {
-  return fsp.rm(path, { recursive: true }).then(cb).catch(cb)
+  return fsp.rm(path, { recursive: true }).then(() => cb(), cb)
 }

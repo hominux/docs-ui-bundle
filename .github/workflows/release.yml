@@ -25,7 +25,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Rebuild image-optimization binaries
-        run: npm rebuild gifsicle optipng-bin
+        run: npm rebuild gifsicle optipng-bin jpegtran-bin
 
       - name: Build UI bundle
         run: node_modules/.bin/gulp bundle

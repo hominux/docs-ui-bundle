@@ -78,7 +78,6 @@ function generateOcticons (cb) {
   result += '</svg>'
   const filename = ospath.join(__filename, '../../../src/img/octicons-16.svg')
   fs.writeFile(filename, result, cb)
-  cb()
 }
 
 module.exports = function generateOcticonsTask () {
