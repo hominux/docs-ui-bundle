@@ -8,7 +8,7 @@
   <ul class="components bg-gray-100 dark:bg-fp-blue-darkest">
     {{#each site.components}}
     <li class="component{{#if (eq this @root.page.component)}} is-current{{/if}}">
-      <a class="title" href="{{{relativize ./url}}}">{{{./title}}}</a>
+      <a class="title flex items-center gap-2" href="{{{relativize ./url}}}">{{> component-logo name=./name class="h-5 w-auto rounded"}}{{{./title}}}</a>
       {{#if (gt ./versions.length 1) }}
       <ul class="versions">
         {{#each ./versions}}
