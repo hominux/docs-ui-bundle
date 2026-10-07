@@ -355,10 +355,6 @@ html.dark-theme button.browse-version:hover {
     padding-right: 0;
   }
 
-  body.nav-sm .DocSearch-Button svg {
-    left: 20px;
-  }
-
   body.nav-sm .nav-collapse button span {
     transform: rotate(-90deg);
   }
@@ -379,8 +375,7 @@ html.dark-theme button.browse-version:hover {
 
   body.nav-sm .nav-panel-menu .context .title,
   body.nav-sm .nav-panel-menu .context .version,
-  body.nav-sm .nav-resize,
-  body.nav-sm .DocSearch-Button span {
+  body.nav-sm .nav-resize {
     display: none;
   }
 
