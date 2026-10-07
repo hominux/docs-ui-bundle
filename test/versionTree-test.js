@@ -30,31 +30,21 @@ describe('versionTree', () => {
     expectVersions(tree.snapshot, ['3.0.1-SNAPSHOT', '3.0.0-SNAPSHOT'])
   })
 
-  it('page version overrides urls when component names are the same', () => {
-    const tree = treeOf(
-      component('test', [version('2.0.0', './version.html')]),
-      page('test', [version('2.0.0', './page.html')])
-    )
+  const overrideCases = [
+    ['page version overrides urls when component names are the same', 'test', '2.0.0', './page.html'],
+    ['does not override if page does not define same version', 'test', '1.0.0', './version.html'],
+    ['page versions do not override if different component name', 'baz', '2.0.0', './version.html'],
+  ]
 
-    expectStableUrl(tree, '2.0.0', './page.html')
-  })
+  overrideCases.forEach(([title, pageComponent, pageVersion, expectedUrl]) => {
+    it(title, () => {
+      const tree = treeOf(
+        component('test', [version('2.0.0', './version.html')]),
+        page(pageComponent, [version(pageVersion, './page.html')])
+      )
 
-  it('does not override if page does not define same version', () => {
-    const tree = treeOf(
-      component('test', [version('2.0.0', './version.html')]),
-      page('test', [version('1.0.0', './page.html')])
-    )
-
-    expectStableUrl(tree, '2.0.0', './version.html')
-  })
-
-  it('page versions do not override if different component name', () => {
-    const tree = treeOf(
-      component('test', [version('2.0.0', './version.html')]),
-      page('baz', [version('2.0.0', './page.html')])
-    )
-
-    expectStableUrl(tree, '2.0.0', './version.html')
+      expectStableUrl(tree, '2.0.0', expectedUrl)
+    })
   })
 
   it('should return an empty structure', () => {

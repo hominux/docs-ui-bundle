@@ -28,8 +28,8 @@ const uglify = require('gulp-uglify')
 const vfs = require('vinyl-fs')
 const git = require('git-rev-sync')
 
-module.exports = (src, dest, preview) =>
-  function build () {
+module.exports = function buildTask (src, dest, preview) {
+  return function build () {
     const opts = { base: src, cwd: src }
     const sourcemaps = preview || process.env.SOURCEMAPS === 'true'
     const postcssPlugins = [
@@ -110,6 +110,7 @@ module.exports = (src, dest, preview) =>
       vfs.src('partials/*.hbs', opts).pipe(replace('@@antora-ui-version', git.isTagDirty() ? git.long() : git.tag()))
     ).pipe(vfs.dest(dest, { sourcemaps: sourcemaps && '.' }))
   }
+}
 
 function newestMtime (mtimes, initial) {
   return new Date(Math.max(initial, ...mtimes))

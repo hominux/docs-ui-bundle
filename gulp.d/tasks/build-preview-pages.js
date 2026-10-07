@@ -15,8 +15,8 @@ const yaml = require('js-yaml')
 
 const ASCIIDOC_ATTRIBUTES = { experimental: '', icons: 'font', sectanchors: '', 'source-highlighter': 'highlight.js' }
 
-module.exports = (src, previewSrc, previewDest, sink = () => map()) =>
-  function buildPreviewPages (done) {
+module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, sink = () => map()) {
+  return function buildPreviewPages (done) {
     return Promise.all([
       loadSampleUiModel(previewSrc),
       toPromise(
@@ -82,6 +82,7 @@ module.exports = (src, previewSrc, previewDest, sink = () => map()) =>
           .pipe(sink())
       )
   }
+}
 
 function loadSampleUiModel (src) {
   return fsp.readFile(ospath.join(src, 'ui-model.yml'), 'utf8').then((contents) => yaml.load(contents))
