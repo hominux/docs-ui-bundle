@@ -4,9 +4,7 @@ Antora UI for the Compress4J documentation site.
 
 This is a fork of [fedora/docs/docs-website/ui-bundle](https://gitlab.com/fedora/docs/docs-website/ui-bundle)
 (itself derived from [`@antora/ui-default`](https://gitlab.com/antora/antora-ui-default)),
-rebranded for Compress4J (logo, footer, contributing link; the color palette is inherited from the ZirekHQ fork) and with a
-completed multi-language switcher (`page-languages.hbs` — upstream ships this as an
-unfinished stub hardcoded to one language).
+rebranded for Compress4J (logo, footer, contributing link; the color palette is inherited from the ZirekHQ fork).
 
 ## How to use it with Antora
 
