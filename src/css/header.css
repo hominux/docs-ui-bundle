@@ -356,7 +356,7 @@ body {
 }
 
 #search-input {
-  background: rgba(255, 255, 255, 0.1);
+  background: #253d53;
   border: 1px solid #5b7894;
   border-radius: 4px;
   color: #fff;

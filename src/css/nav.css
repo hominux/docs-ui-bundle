@@ -26,10 +26,6 @@
   height: inherit;
 }
 
-html.is-clipped--nav {
-  /* overflow-y: hidden; */
-}
-
 .nav-panel-menu {
   overflow-y: auto;
   height: var(--nav-panel-menu-height);
@@ -52,7 +48,6 @@ html.is-clipped--nav {
 
 .nav-menu {
   min-height: 100%;
-  /* padding: 0.5rem 0.75rem; */
   padding-right: 2px;
   line-height: var(--nav-line-height);
   position: relative;
