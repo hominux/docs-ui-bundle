@@ -451,9 +451,18 @@ body.nav-sm .nav-panel-menu {
 
 .nav-title-link {
   color: inherit;
+  min-width: 0;
+}
+
+.nav-title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nav-component-logo {
+  flex: none;
   height: 1.4rem;
   width: auto;
   border-radius: 0.2rem;

@@ -1,11 +1,9 @@
 <ul class="versions">
   {{#each this}}
-  <li class="version
-    {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
-    {{~#if (eq this ../latest)}} is-latest{{/if}}">
-    <a href="{{{relativize ./url}}}">
+  <li class="version{{#if current}} is-current{{/if}}{{#if latest}} is-latest{{/if}}">
+    <a href="{{{relativize ./url}}}"{{#if current}} aria-current="page"{{/if}}>
       {{./displayVersion}}
-      {{~#if (eq this ../latest)}}<span class="current">current</span>{{/if}}
+      {{~#if latest}}<span class="current">latest</span>{{/if}}
     </a>
   </li>
   {{/each}}

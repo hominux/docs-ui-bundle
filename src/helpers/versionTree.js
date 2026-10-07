@@ -14,16 +14,28 @@ function versionTree (components, page) {
       page &&
       page.component &&
       component.name === page.component.name ? versionToUrl : {}
-    component.versionTree = splitVersions(component.versions, componentVersionToUrl)
+    component.versionTree = splitVersions(
+      component.versions,
+      componentVersionToUrl,
+      currentVersion(component, page),
+      component.latest
+    )
   }
   return components
 }
 
-function splitVersions (versions, versionToUrl) {
-  const snapshot = versions.filter((v) => v.displayVersion.includes('SNAPSHOT')).map((v) => navVersion(v, versionToUrl))
-  const stable = versions.filter((v) => !v.displayVersion.includes('-')).map((v) => navVersion(v, versionToUrl))
+function currentVersion (component, page) {
+  return page && page.component && page.componentVersion && component.name === page.component.name
+    ? page.componentVersion.displayVersion
+    : undefined
+}
+
+function splitVersions (versions, versionToUrl, current, latest) {
+  const toNav = (v) => navVersion(v, versionToUrl, current, latest)
+  const snapshot = versions.filter((v) => v.displayVersion.includes('SNAPSHOT')).map(toNav)
+  const stable = versions.filter((v) => !v.displayVersion.includes('-')).map(toNav)
   const preview = versions.filter((v) => !v.displayVersion.includes('SNAPSHOT') &&
-    v.displayVersion.includes('-')).map((v) => navVersion(v, versionToUrl))
+    v.displayVersion.includes('-')).map(toNav)
   return {
     snapshot: snapshot.length > 0 ? snapshot : null,
     stable: stable.length > 0 ? stable : null,
@@ -31,10 +43,13 @@ function splitVersions (versions, versionToUrl) {
   }
 }
 
-function navVersion (v, versionToUrl) {
-  const navVersion =
-    v.latest ? { latest: v.latest, url: v.url, displayVersion: v.displayVersion }
-      : { url: v.url, displayVersion: v.displayVersion }
+function navVersion (v, versionToUrl, current, latest) {
+  const navVersion = {
+    url: v.url,
+    displayVersion: v.displayVersion,
+    latest: Boolean(latest) && v.version === latest.version,
+    current: v.displayVersion === current,
+  }
   if (versionToUrl[v.displayVersion]) {
     navVersion.url = versionToUrl[v.displayVersion]
   }

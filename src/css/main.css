@@ -304,3 +304,7 @@ html.dark-theme .invert-dark img {
 .icon.green {
   color: green;
 }
+
+#modal-versions .version.is-current > a {
+  font-weight: 700;
+}
