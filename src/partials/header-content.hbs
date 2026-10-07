@@ -1,19 +1,15 @@
 <header class="header" role="banner">
-  <nav class="fixed z-50 top-0 w-full bg-linear-to-l from-fp-blue to-fp-blue-light dark:bg-none dark:bg-fp-blue-dark" style="">
+  <nav class="fixed z-50 top-0 w-full" style="background-color:#0d2740">
     <div class="mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-14 items-center justify-between">
         <div
           class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
         >
           <div class="flex shrink-0 items-center">
-            <a href="{{or site.url (or siteRootUrl siteRootPath)}}" title="Hominux Docs">
-              <img class="h-6 z-10 w-auto rounded" src="{{uiRootPath}}/img/hominux-logo.png" alt="Hominux">
+            <a class="flex items-center gap-2 text-white font-semibold" href="{{or site.url (or siteRootUrl siteRootPath)}}" title="Hominux Docs">
+              <img class="h-6 z-10 w-auto rounded" src="{{uiRootPath}}/img/hominux-logo.png" alt="">
+              <span>Hominux</span>
             </a>
-            {{#if (or (eq page.component.name "compress4j") (eq page.component.name "pact-avro-plugin"))}}
-            <a class="ml-3 flex items-center" href="{{{relativize page.component.url}}}" title="{{page.component.title}}">
-              <img class="h-6 z-10 w-auto rounded" src="{{uiRootPath}}/img/{{page.component.name}}-logo.png" alt="{{page.component.title}}">
-            </a>
-            {{/if}}
           </div>
 
 
