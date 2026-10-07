@@ -47,59 +47,20 @@
   margin: 0 auto;
 }
 
-#springlogo,
-#springlogo-foot {
-  height: 45px;
-  max-width: 250px;
+#hominuxlogo {
+  height: 1.75rem;
+  width: auto;
+  margin-right: 0.5rem;
 }
 
-footer #social-icons {
-  flex-shrink: 0;
-  width: 160px;
+.navbar-title {
+  color: #fff;
+  font-weight: 600;
 }
 
-footer #social-icons a {
-  height: 40px;
-  margin-left: 15px;
-}
-
-footer #social-icons svg {
-  width: 40px;
-}
-
-footer #social-icons a:hover svg .cls-1,
-footer #social-icons a:focus svg .cls-1 {
-  fill: var(--color-accent-3);
-}
-
-footer #spring-links a:hover {
-  color: #086dc3;
+footer #hominux-links a:hover {
+  color: var(--link-font-color);
   text-decoration: underline;
-}
-
-#youtube-icon .cls-1 {
-  fill: var(--social-icon-circle);
-}
-
-#youtube-icon .cls-2 {
-  fill: var(--social-icon-color);
-}
-
-#github-icon .cls-1 {
-  fill: var(--social-icon-circle);
-}
-
-#github-icon .cls-2 {
-  fill: var(--social-icon-color);
-  fill-rule: evenodd;
-}
-
-#twitter-icon .cls-1 {
-  fill: var(--social-icon-circle);
-}
-
-#twitter-icon .cls-2 {
-  fill: var(--social-icon-color);
 }
 
 .sidebar-links {
@@ -280,7 +241,7 @@ html.dark-theme #modal-versions .version-toggle span {
 }
 
 #modal-versions .current {
-  background-color: #80ea6e;
+  background-color: var(--mark-background-color);
   color: #111;
   align-items: center;
   border-radius: 4px;

@@ -230,7 +230,7 @@ a.ais-Hits-item:hover {
 .dark-theme mark.ais-Highlight-highlighted,
 .dark-theme mark.ais-Snippet-highlighted {
   color: white;
-  background: #6db33f;
+  background: var(--color-accent-3);
 }
 
 .dark-theme .modal__overlay {
@@ -316,7 +316,7 @@ a.ais-Hits-item:hover {
 }
 
 #hits ul li a.selected {
-  background: #6db33f;
+  background: var(--color-accent-3);
   color: #fff;
 }
 

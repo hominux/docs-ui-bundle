@@ -328,7 +328,7 @@ body {
 
 .navbar-menu a.navbar-item:hover,
 .navbar-menu .navbar-link:hover {
-  color: #6db33f;
+  color: #fff;
 }
 
 .navbar-dropdown a.navbar-item {
@@ -351,4 +351,29 @@ body {
 .external-link-icon {
   width: 12px;
   margin-left: 10px;
+}
+
+.navbar-project-logo {
+  height: 1.25rem;
+  width: auto;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+#search-field {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+#search-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #5b7894;
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+}
+
+#search-field .filter {
+  font-size: 0.8rem;
 }
