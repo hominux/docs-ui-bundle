@@ -1,0 +1,25 @@
+url: /samples/index.html
+component:
+  name: foobar
+  url: '#'
+version: '2.0.0'
+latest:
+  url: '/samples/index.html'
+  version: '2.0.0'
+  displayVersion: '2.0.0'
+  title: Spring Foobar
+previous:
+  content: Quickstart
+  url: '#'
+  urlType: 'internal'
+next:
+  content: Liber Recusabo
+  url: '#'
+  urlType: 'internal'
+breadcrumbs:
+  - content: Spring Foobar
+    url: '#'
+    urlType: fragment
+  - content: Samples
+    url: '#'
+    urlType: fragment

@@ -1,8 +1,26 @@
-<div class="nav-container dark:text-gray-300 bg-fp-gray-lightest dark:bg-fp-blue-darker dark:border-r dark:border-gray-800"{{#if page.component}} data-component="{{page.component.name}}" data-version="{{page.version}}"{{/if}}>
+<div class="nav-container"{{#if page.component}} data-component="{{page.component.name}}" data-version="{{page.version}}"{{/if}}>
   <aside class="nav">
     <div class="panels">
-{{> nav-menu}}
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
 {{> nav-explore}}
+{{> nav-menu}}
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
     </div>
+    <div class="nav-resize"></div>
   </aside>
 </div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>

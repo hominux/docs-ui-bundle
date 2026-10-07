@@ -1,220 +1,127 @@
-antoraVersion: '1.0.0'
+antoraVersion: '3.1.2'
+asciidoc:
+  extensions:
+  # TIP uncomment the next line to switch to Asciidoctor Tabs
+  - '@asciidoctor/tabs'
+  - '@springio/asciidoctor-extensions'
 site:
   url: http://localhost:5252
-  title: Brand Docs
-  homeUrl: &home_url /xyz/5.2/index.html
+  title: Spring
+  homeUrl: /index.html
   components:
-  - name: abc
-    title: Project ABC
+  - name: foobar
+    title: &component_title Spring Foobar
     url: '#'
-    versions:
-    - &latest_version_abc
-      url: '#'
-      version: '1.1'
-      displayVersion: '1.1'
-    - url: '#'
-      version: '1.0'
-      displayVersion: '1.0'
-    latestVersion: *latest_version_abc
-  - &component
-    name: xyz
-    title: &component_title Project XYZ super long title that span across 2 lines
-    url: /xyz/6.0/index.html
-    versions:
-    - &latest_version_xyz
-      url: /xyz/6.0/index.html
-      version: '6.0'
-      displayVersion: '6.0'
-    - &component_version
+    versions: &foobar_versions
+    - &foobar_latest_version
+      url: '/index.html'
+      version: '2.0.0'
+      displayVersion: '2.0.0'
       title: *component_title
-      url: '#'
-      version: '5.2'
-      displayVersion: '5.2'
-    - url: '#'
-      version: '5.1'
-      displayVersion: '5.1'
-    - url: '#'
-      version: '5.0'
-      displayVersion: '5.0'
-    latestVersion: *latest_version_xyz
-  - name: '123'
-    title: Project 123
+      versionSegment: '2.0'
+    - &foobar_1_0_version
+      url: '/1.0/index.html'
+      version: '1.0.0'
+      displayVersion: '1.0.0'
+      versionSegment: '1.0'
+    latest: *foobar_latest_version
+  - name: baz
+    title: &baz_component_title Spring Baz
     url: '#'
     versions:
-    - &latest_version_123
-      url: '#'
-      version: '2.2'
-      displayVersion: '2.2'
-    - url: '#'
-      version: '2.1'
-      displayVersion: '2.1'
-    - url: '#'
-      version: '2.0'
-      displayVersion: '2.0'
-    latestVersion: *latest_version_123
-  - name: noversion
-    title: Unversioned Project
-    url: '#'
-    versions:
-    - &latest_version_noversion
-      url: '#'
-      version: ~
-      displayVersion: 'default'
-page:
-  url: *home_url
-  home: true
-  title: Brand&#8217;s Hardware &amp; Software Requirements
-  component: *component
-  componentVersion: *component_version
-  version: '5.2'
-  displayVersion: '5.2'
-  module: ROOT
-  relativeSrcPath: index.adoc
-  editUrl: http://example.com/project-xyz/blob/main/index.adoc
-  origin:
-    private: false
-  previous:
-    content: Quickstart
-    url: '#'
-    urlType: 'internal'
-  next:
-    content: Liber Recusabo
-    url: '#'
-    urlType: 'internal'
-  breadcrumbs:
-  - content: Quickstart
-    url: '#'
-    urlType: fragment
-  - content: Brand&#8217;s Hardware &amp; Software Requirements
-    url: /xyz/5.2/index.html
-    urlType: internal
-  versions:
-  - version: '6.0'
-    displayVersion: '6.0'
-    url: '#'
-  - version: '5.2'
-    displayVersion: '5.2'
-    url: '#'
-  - version: '5.1'
-    displayVersion: '5.1'
-    url: '#'
-  - version: '5.0'
-    displayVersion: '5.0'
-    missing: true
-    url: '#'
-  navigation:
-  - root: true
-    items:
-    - content: Quickstart
-      url: '#'
-      urlType: fragment
-      items:
-      - content: Brand&#8217;s Hardware &amp; Software Requirements
-        url: /xyz/5.2/index.html
-        urlType: internal
-      - content: Cu Solet
-        url: '/xyz/5.2/index.html#cu-solet'
-        urlType: internal
-      - content: English + 中文
-        url: '/xyz/5.2/index.html#english+中文'
-        urlType: internal
-    - content: Liber Recusabo
-      url: '#liber-recusabo'
-      urlType: fragment
-    - content: Reference
-      items:
-      - content: Keyboard Shortcuts
+      - &baz_latest_version
+        url: '/baz/index.html'
+        version: '1.0.0'
+        displayVersion: '1.0.0'
+        title: *baz_component_title
+        versionSegment: '1.0'
+    latest: *baz_latest_version
+shared:
+  foobar:
+    1.0.0:
+      home: true
+      title: Spring Foobar
+      relativeSrcPath: index.adoc
+      editUrl: http://example.com/project-xyz/blob/master/index.adoc
+      component:
+        title: Spring Foobar
         url: '#'
-        urlType: fragment
-      - content: Importing and Exporting
+        versions:
+          - url: '/index.html'
+            version: '2.0.0'
+            displayVersion: '2.0.0'
+            title: *component_title
+            versionSegment: '2.0'
+          - url: '/1.0/index.html'
+            version: '1.0.0'
+            displayVersion: '1.0.0'
+            versionSegment: '1.0'
+      componentVersion: *foobar_1_0_version
+      versions:
+        - version: '2.0.0'
+          displayVersion: '2.0.0'
+          url: '#'
+          versionSegment: ''
+        - version: '1.0.0'
+          displayVersion: '1.0.0'
+          versionSegment: '1.0'
+          url: '#'
+      navigation:
+        - root: true
+          items:
+            - content: Overview
+              url: '/1.0/index.html'
+    2.0.0:
+      home: true
+      title: Spring Foobar
+      relativeSrcPath: index.adoc
+      editUrl: http://example.com/project-xyz/blob/master/index.adoc
+      component:
+        title: &component_title Spring Foobar
         url: '#'
-        urlType: fragment
-      - content: Some super long SubCategory title than should span 2 lines
-        url: '/xyz/5.2/category.html'
-        urlType: internal
-        items:
-        - content: SubCategory item
-          url: '/xyz/5.2/category/item.html'
-          urlType: internal
-      - content: Some Code
-        url: '/xyz/5.2/index.html#some-code'
-        urlType: internal
-    - content: Category
-      url: 'category.html'
-      urlType: internal
-  attributes:
-    category:
-      category-pages:
-        - title: Pellentesque
-          pub:
-            url: '#'
-          asciidoc:
-            attributes:
-              description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a pellentesque orci. Pellentesque finibus, erat ut dignissim semper, libero augue viverra felis, in condimentum dolor diam a quam. 
-        - title: laoreet
-          pub:
-            url: '#'
-          asciidoc:
-            attributes:
-              description: Nulla eu dui lorem. Aliquam quis venenatis libero, quis dictum mauris. Duis non ex risus. Proin leo lacus, bibendum eget cursus in, iaculis at enim.
-    tag:
-      tag-pages:
-        - title: Pellentesque
-          pub:
-            url: '#'
-          asciidoc:
-            attributes:
-              description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a pellentesque orci. Pellentesque finibus, erat ut dignissim semper, libero augue viverra felis, in condimentum dolor diam a quam. 
-        - title: laoreet
-          pub:
-            url: '#'
-          asciidoc:
-            attributes:
-              description: Nulla eu dui lorem. Aliquam quis venenatis libero, quis dictum mauris. Duis non ex risus. Proin leo lacus, bibendum eget cursus in, iaculis at enim.
-asciidoc:
-  attributes: {}
-  extensions:
-  - '@asciidoctor/tabs'
-catalog:
-- title: tag1
-  src:
-    component: quick-docs
-  asciidoc:
-    attributes:
-      page-layout: category
-      page-tag: tag1
-  pub:
-    url: '#'
-- title: tag with space
-  src:
-    component: quick-docs
-  asciidoc:
-    attributes:
-      page-layout: category
-      page-tag: tag with space
-  pub:
-    url: '#'
-- src:
-    component: quick-docs
-  asciidoc:
-    attributes:
-      page-layout: category
-      page-tag: superlongtag
-  pub:
-    url: '#'
-- src:
-    component: quick-docs
-  asciidoc:
-    attributes:
-      page-layout: category
-      page-tag: yet another tag
-  pub:
-    url: '#'
-- src:
-    component: quick-docs
-  asciidoc:
-    attributes:
-      page-layout: category
-      page-category: test-category
-  pub:
-    url: '#'
+        versions: *foobar_versions
+      componentVersion: *foobar_latest_version
+      versions:
+        - version: '2.0.0'
+          displayVersion: '2.0.0'
+          url: '#'
+          versionSegment: ''
+        - version: '1.0.0'
+          displayVersion: '1.0.0'
+          url: '#'
+          versionSegment: '1.0'
+      navigation:
+        - root: true
+          items:
+            - content: Overview
+              url: '/index.html'
+            - content: Samples
+              url: '/samples/index.html'
+              items:
+                - content: Content
+                  url: '/samples/content/index.html'
+                - content: Edge cases
+                  url: '/samples/edge-cases/index.html'
+                - content: 404
+                  url: '/404.html'
+                - content: External Link
+                  url: 'https://spring.io'
+                  roles: 'link-external'
+                  target: '_blank'
+  baz:
+    1.0.0:
+      home: true
+      title: Spring Baz
+      relativeSrcPath: index.adoc
+      editUrl: http://example.com/project-xyz/blob/master/index.adoc
+      component:
+        title: Spring Baz
+        url: '#'
+        versions:
+          - *baz_latest_version
+      componentVersion: *baz_latest_version
+      navigation:
+        - root: true
+          items:
+            - content: Baz
+              url: '/baz/index.html'
