@@ -2,7 +2,7 @@
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
     {{#with @root.page.componentVersion}}
-    <h3 class="title text-fp-blue-dark dark:text-fp-blue font-bold"><a href="{{{relativize ./url}}}">{{./title}}</a></h3>
+    <h3 class="title text-fp-blue-dark dark:text-fp-blue font-bold"><a class="flex items-center gap-2" href="{{{relativize ./url}}}">{{> component-logo name=@root.page.component.name class="h-6 w-auto rounded"}}{{./title}}</a></h3>
     {{/with}}
 {{> nav-tree navigation=this}}
   </nav>
