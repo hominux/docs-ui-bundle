@@ -14,6 +14,10 @@
 .theme-toggler input {
   opacity: 0;
 }
+.theme-toggler:focus-within {
+  outline: 2px solid #cfe3f7;
+  outline-offset: 2px;
+}
 .theme-toggler .moon {
   display: none;
 }

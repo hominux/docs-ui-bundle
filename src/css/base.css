@@ -92,7 +92,11 @@ button::-moz-focus-inner {
 summary {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  outline: none;
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--link-font-color);
+  outline-offset: 2px;
 }
 
 table {

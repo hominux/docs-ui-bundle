@@ -289,7 +289,7 @@ html.dark-theme {
   --highlight-tag-font-color: #7bcc72;
   --highlight-tag-attribute-font-color: #b392f0;
   --highlight-type-font-color: #b392f0;
-  --highlight-link-font-color: #1565c0;
+  --highlight-link-font-color: var(--link-font-color);
   --highlight-addition-font-color: #7bcc72;
   --highlight-deletion-font-color: #f6f8fa;
   --highlight-regex-font-color: #79b8ff;

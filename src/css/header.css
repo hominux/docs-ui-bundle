@@ -1,5 +1,6 @@
-html.is-clipped--navbar {
-  overflow-y: auto;
+html.is-clipped--navbar,
+html.is-clipped--nav {
+  overflow: hidden;
 }
 
 body {

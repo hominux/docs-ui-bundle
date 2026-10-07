@@ -113,7 +113,7 @@ body.fixed-toc #toc {
 #tocbar-container {
   display: var(--toc-bar-display);
   width: 100%;
-  height: var(--tocbar-height);
+  height: var(--toc-bar-height);
   background-color: var(--body-background-color);
   border-bottom: 1px solid var(--panel-border-color);
   z-index: 10000;
@@ -140,6 +140,11 @@ button#toggle-toc {
   outline: none;
   padding: 0;
   display: block;
+}
+
+button#toggle-toc:focus-visible {
+  outline: 2px solid var(--link-font-color);
+  outline-offset: 2px;
 }
 
 body.show-toc button#toggle-toc {
