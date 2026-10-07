@@ -294,15 +294,6 @@ html.dark-theme button.browse-version:hover {
   margin-left: -0.5rem;
 }
 
-.nav-menu .search {
-  position: relative;
-  border: 0 none;
-  height: 40px;
-  display: none;
-  margin: 0 -1rem;
-  margin-top: 1rem;
-}
-
 .nav-resize {
   position: absolute;
   top: 0;
@@ -370,11 +361,6 @@ html.dark-theme button.browse-version:hover {
 
   body.nav-sm .nav-collapse button span {
     transform: rotate(-90deg);
-  }
-
-  body.nav-sm .nav-menu .search {
-    margin-bottom: 0;
-    margin-top: 0;
   }
 
   body.nav-sm button.browse-version {
@@ -449,10 +435,6 @@ body.nav-sm .nav-panel-menu {
   }
 
   .nav-collapse {
-    display: block;
-  }
-
-  .nav-menu .search {
     display: block;
   }
 

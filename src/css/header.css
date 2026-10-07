@@ -301,17 +301,6 @@ body {
     white-space: nowrap;
   }
 
-  .navbar-dropdown .navbar-item-special-3 {
-    color: var(--color-gray-30);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-  }
-  .navbar-dropdown .navbar-item-special {
-    padding-bottom: 20px;
-    margin-bottom: 1.5rem;
-    color: var(--link-font-color);
-  }
-
   .navbar-dropdown .navbar-item:last-child {
     border-radius: inherit;
   }
@@ -372,6 +361,11 @@ body {
   border-radius: 4px;
   color: #fff;
   padding: 0.25rem 0.5rem;
+}
+
+#search-input::placeholder {
+  color: #cfe3f7;
+  opacity: 1;
 }
 
 #search-field .filter {
