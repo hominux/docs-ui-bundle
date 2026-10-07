@@ -21,14 +21,15 @@
   function activateCopyUrl (copyUrl) {
     if (!copyUrl) return
 
-    copyUrl.addEventListener('click', function (event) {
+    copyUrl.addEventListener('click', async function (event) {
       const hash = _hash(window)
       const versionedUrl = document.querySelector('meta[name="versioned-url"]')?.content + hash
-      window.navigator.clipboard.writeText(versionedUrl)
+      const written = window.navigator.clipboard.writeText(versionedUrl)
       this.classList.add('copied')
       setTimeout(() => {
         this.classList.remove('copied')
       }, 1500)
+      await written
     })
   }
 

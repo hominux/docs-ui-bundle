@@ -1,6 +1,8 @@
 'use strict'
 
-module.exports = (navigation, url) => findNavigation(navigation[0].items, url)
+module.exports = function navChildren (navigation, url) {
+  return findNavigation(navigation[0].items, url)
+}
 
 function findNavigation (items, url) {
   if (!items) return

@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = () => new Date().getFullYear().toString()
+module.exports = function year () {
+  return new Date().getFullYear().toString()
+}

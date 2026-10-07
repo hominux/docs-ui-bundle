@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = (val) => !val
+module.exports = function not (val) {
+  return !val
+}

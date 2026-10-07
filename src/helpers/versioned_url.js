@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = (siteUrl, versionSegment, url) => {
+module.exports = function versionedUrl (siteUrl, versionSegment, url) {
   if (!url) {
     // occurs with stock pages like 404.html
     return url

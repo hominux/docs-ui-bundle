@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = (value) => (value || 0) + 1
+module.exports = function increment (value) {
+  return (value || 0) + 1
+}

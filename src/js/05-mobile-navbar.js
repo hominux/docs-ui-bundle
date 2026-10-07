@@ -13,7 +13,7 @@
     if (menu.classList.toggle('is-active')) {
       menu.style.maxHeight = ''
       var expectedMaxHeight = window.innerHeight - Math.round(menu.getBoundingClientRect().top)
-      var actualMaxHeight = parseInt(window.getComputedStyle(menu).maxHeight, 10)
+      var actualMaxHeight = Number.parseInt(window.getComputedStyle(menu).maxHeight, 10)
       if (actualMaxHeight !== expectedMaxHeight) menu.style.maxHeight = expectedMaxHeight + 'px'
     }
   }

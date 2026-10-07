@@ -26,7 +26,7 @@
 
   function onThemeChange () {
     document.documentElement.classList.toggle('dark-theme', this.checked)
-    document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light')
+    document.documentElement.dataset.theme = this.checked ? 'dark' : 'light'
     saveTheme(this.checked ? 'dark' : 'light')
     if (this.checked) {
       this.parentElement.classList.add('active')
@@ -36,6 +36,6 @@
   }
 
   function saveTheme (theme) {
-    window.localStorage && window.localStorage.setItem('theme', theme)
+    if (window.localStorage) window.localStorage.setItem('theme', theme)
   }
 })()

@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = (a) => console.log(JSON.stringify(a, null, 2))
+module.exports = function log (a) {
+  return console.log(JSON.stringify(a, null, 2))
+}

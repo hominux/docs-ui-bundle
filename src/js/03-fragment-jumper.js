@@ -8,6 +8,11 @@
     return hash && (~hash.indexOf('%') ? decodeURIComponent(hash) : hash).slice(1)
   }
 
+  function fragmentTarget (hash) {
+    var fragment = decodeFragment(hash)
+    return fragment ? document.getElementById(fragment) : null
+  }
+
   function computePosition (el, sum) {
     return article.contains(el) ? computePosition(el.offsetParent, el.offsetTop + sum) : sum
   }
@@ -22,8 +27,8 @@
   }
 
   window.addEventListener('load', function jumpOnLoad (e) {
-    var fragment, target
-    if ((fragment = decodeFragment(window.location.hash)) && (target = document.getElementById(fragment))) {
+    var target = fragmentTarget(window.location.hash)
+    if (target) {
       jumpToAnchor.bind(target)()
       setTimeout(jumpToAnchor.bind(target), 0)
     }
@@ -31,8 +36,8 @@
   })
 
   Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function (el) {
-    var fragment, target
-    if ((fragment = decodeFragment(el.hash)) && (target = document.getElementById(fragment))) {
+    var target = fragmentTarget(el.hash)
+    if (target) {
       el.addEventListener('click', jumpToAnchor.bind(target))
     }
   })

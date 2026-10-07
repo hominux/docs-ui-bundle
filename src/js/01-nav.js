@@ -7,7 +7,7 @@
   var navContainer = document.querySelector('.nav-container')
   var navToggle1 = document.querySelector('#nav-toggle-1')
   var navToggle2 = document.querySelector('#nav-toggle-2')
-  var isNavOpen = window.localStorage && window.localStorage.getItem('sidebar') === 'open'
+  var isNavOpen = window.localStorage?.getItem('sidebar') === 'open'
   if (navToggle1) {
     navToggle1.addEventListener('click', showNav)
   }
@@ -32,7 +32,7 @@
   }
 
   var currentActivePageItem = menuPanel.querySelector('.nav-item.is-current-page.is-active')
-  if (currentActivePageItem && currentActivePageItem.querySelector('.nav-item-toggle')) {
+  if (currentActivePageItem?.querySelector('.nav-item-toggle')) {
     currentActivePageItem.querySelector('.nav-link').addEventListener('click', function (e) {
       currentActivePageItem.querySelector('.nav-item-toggle').click()
       e.preventDefault()
@@ -72,38 +72,47 @@
     } else {
       document.body.classList.remove('nav-sm')
     }
-    window.localStorage && window.localStorage.setItem('sidebar', !isNavOpen ? 'open' : 'close')
+    if (window.localStorage) window.localStorage.setItem('sidebar', isNavOpen ? 'close' : 'open')
     isNavOpen = !isNavOpen
   })
 
-  function onHashChange () {
-    var navLink
+  function resolveHash () {
     var hash = window.location.hash
-    if (hash) {
-      if (hash.indexOf('%')) hash = decodeURIComponent(hash)
-      navLink = menuPanel.querySelector('.nav-link[href="' + hash + '"]')
-      if (!navLink) {
-        var targetNode = document.getElementById(hash.slice(1))
-        if (targetNode) {
-          var current = targetNode
-          var ceiling = document.querySelector('article.doc')
-          while ((current = current.parentNode) && current !== ceiling) {
-            var id = current.id
-            // NOTE: look for section heading
-            if (!id && (id = SECT_CLASS_RX.test(current.className))) id = (current.firstElementChild || {}).id
-            if (id && (navLink = menuPanel.querySelector('.nav-link[href="#' + id + '"]'))) break
-          }
-        }
-      }
+    if (!hash) return undefined
+    return hash.indexOf('%') ? decodeURIComponent(hash) : hash
+  }
+
+  function navLinkForSection (node) {
+    var id = node.id
+    // NOTE: look for section heading
+    if (!id && SECT_CLASS_RX.test(node.className)) id = node.firstElementChild?.id
+    return id ? menuPanel.querySelector('.nav-link[href="#' + id + '"]') : null
+  }
+
+  function findAncestorNavLink (targetNode) {
+    var ceiling = document.querySelector('article.doc')
+    var current = targetNode.parentNode
+    while (current && current !== ceiling) {
+      var navLink = navLinkForSection(current)
+      if (navLink) return navLink
+      current = current.parentNode
     }
-    var navItem
-    if (navLink) {
-      navItem = navLink.parentNode
-    } else if (originalPageItem) {
-      navLink = (navItem = originalPageItem).querySelector('.nav-link')
-    } else {
-      return
-    }
+    return undefined
+  }
+
+  function findHashNavLink (hash) {
+    var navLink = menuPanel.querySelector('.nav-link[href="' + hash + '"]')
+    if (navLink) return navLink
+    var targetNode = document.getElementById(hash.slice(1))
+    return targetNode ? findAncestorNavLink(targetNode) : undefined
+  }
+
+  function onHashChange () {
+    var hash = resolveHash()
+    var navLink = hash ? findHashNavLink(hash) : undefined
+    var navItem = navLink ? navLink.parentNode : originalPageItem
+    if (!navItem) return
+    if (!navLink) navLink = navItem.querySelector('.nav-link')
     if (navItem === currentPageItem) return
     find(menuPanel, '.nav-item.is-active').forEach(function (el) {
       el.classList.remove('is-active', 'is-current-path', 'is-current-page')
@@ -120,11 +129,10 @@
   }
 
   function activateCurrentPath (navItem) {
-    var ancestorClasses
     var ancestor = navItem.parentNode
-    while (!(ancestorClasses = ancestor.classList).contains('nav-menu')) {
-      if (ancestor.tagName === 'LI' && ancestorClasses.contains('nav-item')) {
-        ancestorClasses.add('is-active', 'is-current-path')
+    while (!ancestor.classList.contains('nav-menu')) {
+      if (ancestor.tagName === 'LI' && ancestor.classList.contains('nav-item')) {
+        ancestor.classList.add('is-active', 'is-current-path')
       }
       ancestor = ancestor.parentNode
     }
@@ -133,7 +141,7 @@
 
   function toggleActive () {
     if (this.classList.toggle('is-active')) {
-      var padding = parseFloat(window.getComputedStyle(this).marginTop)
+      var padding = Number.parseFloat(window.getComputedStyle(this).marginTop)
       var rect = this.getBoundingClientRect()
       var menuPanelRect = menuPanel.getBoundingClientRect()
       var overflowY = (rect.bottom - menuPanelRect.top - menuPanelRect.height + padding).toFixed()
@@ -174,23 +182,24 @@
     var rect = panel.getBoundingClientRect()
     var effectiveHeight = rect.height
     var navStyle = window.getComputedStyle(nav)
-    if (navStyle.position === 'sticky') effectiveHeight -= rect.top - parseFloat(navStyle.top)
+    if (navStyle.position === 'sticky') effectiveHeight -= rect.top - Number.parseFloat(navStyle.top)
     panel.scrollTop = Math.max(0, (el.getBoundingClientRect().height - effectiveHeight) * 0.5 + el.offsetTop)
   }
 
   function find (from, selector) {
-    return [].slice.call(from.querySelectorAll(selector))
+    return Array.from(from.querySelectorAll(selector))
   }
 
   function findNextElement (from, selector) {
     var el = from.nextElementSibling
-    return el && selector ? el[el.matches ? 'matches' : 'msMatchesSelector'](selector) && el : el
+    if (!el || !selector) return el
+    return el[el.matches ? 'matches' : 'msMatchesSelector'](selector) && el
   }
 
   // Navbar width
   function setNavbarWidth (width) {
     document.documentElement.style.setProperty('--nav-width', `${width}px`)
-    window.localStorage && window.localStorage.setItem('nav-width', `${width}`)
+    if (window.localStorage) window.localStorage.setItem('nav-width', `${width}`)
   }
   document.querySelector('.nav-resize').addEventListener('mousedown', (event) => {
     document.addEventListener('mousemove', resize, false)

@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = (s) => (s ? s.split(',') : [])
+module.exports = function split (s) {
+  return s ? s.split(',') : []
+}

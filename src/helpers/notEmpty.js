@@ -1,3 +1,5 @@
 'use strict'
 
-module.exports = (a) => a !== null
+module.exports = function notEmpty (a) {
+  return a !== null
+}
