@@ -17,7 +17,11 @@
 {{#if page.description}}
 <meta property="og:description" content="{{page.description}}">
 {{else}}
-<meta property="og:description" content="Compress4J documentation.">
+<meta property="og:description" content="Hominux documentation.">
 {{/if}}
-<meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/compress4j-logo.png">
+{{#if (or (eq page.component.name "compress4j") (eq page.component.name "pact-avro-plugin"))}}
+<meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/{{page.component.name}}-logo.png">
+{{else}}
+<meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/hominux-logo.png">
+{{/if}}
 
