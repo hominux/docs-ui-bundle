@@ -30,7 +30,7 @@ const icons = [
 
 const pathRegex = /<svg [^>]+>(.*)<\/svg>/
 
-const preamble = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 208">
+const preamble = (height) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 ${height}">
   <title>Octicons</title>
   <desc>Octicons by GitHub - https://primer.style/octicons/ - License: MIT</desc>
   <metadata
@@ -61,7 +61,7 @@ const preamble = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 208">
 `
 
 function generateOcticons (cb) {
-  let result = preamble
+  let result = preamble(icons.length * 16)
   let offset = 0
   for (const icon of icons) {
     const svg = octicons[icon].toSVG({ width: 16, height: 16 })
