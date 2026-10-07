@@ -18,7 +18,7 @@ const tailwindcss = require('@tailwindcss/postcss')
 const { Readable, Transform } = require('node:stream')
 const map = (transform) => new Transform({ objectMode: true, transform })
 const through = () => map((file, enc, next) => next(null, file))
-const uglify = require('gulp-uglify')
+const terser = require('gulp-terser')
 const vfs = require('vinyl-fs')
 
 module.exports = function build (src, dest, preview) {
@@ -68,14 +68,14 @@ function run (src, dest, preview) {
   const merged = merge(
     vfs
       .src('js/+([0-9])-*.js', { ...opts, sourcemaps })
-      .pipe(uglify())
+      .pipe(terser())
       // NOTE concat already uses stat from newest combined file
       .pipe(concat('js/site.js')),
     vfs
       .src('js/vendor/*([^.])?(.bundle).js', { ...opts, read: false })
       .pipe(vendorBundles)
       .pipe(buffer())
-      .pipe(uglify()),
+      .pipe(terser()),
     vfs
       .src('js/vendor/*.min.js', opts)
       .pipe(map((file, enc, next) => next(null, Object.assign(file, { extname: '' }, { extname: '.js' })))),
