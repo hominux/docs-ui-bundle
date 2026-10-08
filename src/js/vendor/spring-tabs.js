@@ -28,6 +28,7 @@
       const tabsElement = createTabsElement(primaryElement)
       const tab = createTab(primaryElement, tabsElement)
       tab.tabElement.classList.add('selected')
+      tab.tabElement.setAttribute('aria-selected', 'true')
       primaryElement.querySelector('.title').remove()
       primaryElement.classList.add('tabs-content')
     }
@@ -58,6 +59,9 @@
     if (colist) content.append(colist)
     const tabElement = document.createElement('div')
     tabElement.className = 'tab'
+    tabElement.tabIndex = 0
+    tabElement.setAttribute('role', 'tab')
+    tabElement.setAttribute('aria-selected', 'false')
     tabElement.textContent = title
     tabElement.dataset.blockName = title
     content.dataset.blockName = title
@@ -90,27 +94,53 @@
   function configureTabs () {
     for (const tabElement of document.querySelectorAll('.tab')) {
       const tabId = getTabId(tabElement)
-      tabElement.addEventListener('click', onTabClick.bind(tabElement, tabId))
-      if (tabElement.textContent === window.localStorage.getItem(tabId)) select(tabElement)
+      const onTab = onTabClick.bind(tabElement, tabId)
+      tabElement.addEventListener('click', onTab)
+      tabElement.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        onTab()
+      })
+      if (tabElement.textContent === readStored(tabId)) select(tabElement)
     }
   }
 
   function onTabClick (tabId) {
     const title = this.textContent
-    window.localStorage.setItem(tabId, title)
+    writeStored(tabId, title)
     for (const tabElement of document.querySelectorAll('.tab')) {
       if (getTabId(tabElement) === tabId && tabElement.textContent === title) select(tabElement)
     }
   }
 
   function select (tabElement) {
-    for (const child of tabElement.parentNode.children) child.classList.remove('selected')
+    for (const child of tabElement.parentNode.children) {
+      child.classList.remove('selected')
+      child.setAttribute('aria-selected', 'false')
+    }
     tabElement.classList.add('selected')
+    tabElement.setAttribute('aria-selected', 'true')
     for (const child of tabElement.parentNode.parentNode.children) {
       if (!child.classList.contains('content')) continue
       tabElement.dataset.blockName === child.dataset.blockName
         ? child.classList.remove('hidden')
         : child.classList.add('hidden')
+    }
+  }
+
+  function readStored (key) {
+    try {
+      return window.localStorage.getItem(key)
+    } catch {
+      return null
+    }
+  }
+
+  function writeStored (key, value) {
+    try {
+      window.localStorage.setItem(key, value)
+    } catch {
+      // storage blocked: selection still applies for this page view
     }
   }
 

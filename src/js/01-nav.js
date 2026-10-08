@@ -7,7 +7,9 @@
   var navContainer = document.querySelector('.nav-container')
   var navToggle1 = document.querySelector('#nav-toggle-1')
   var navToggle2 = document.querySelector('#nav-toggle-2')
-  var isNavOpen = window.localStorage?.getItem('sidebar') === 'open'
+  var isNavCollapsed = readStored('sidebar') === 'collapsed'
+  document.body.classList.toggle('nav-sm', isNavCollapsed)
+  applyStoredNavWidth()
   if (navToggle1) {
     navToggle1.addEventListener('click', showNav)
   }
@@ -67,13 +69,9 @@
   })
 
   listen('#nav-collapse-toggle', 'click', function () {
-    if (isNavOpen) {
-      document.body.classList.add('nav-sm')
-    } else {
-      document.body.classList.remove('nav-sm')
-    }
-    if (window.localStorage) window.localStorage.setItem('sidebar', isNavOpen ? 'close' : 'open')
-    isNavOpen = !isNavOpen
+    isNavCollapsed = !isNavCollapsed
+    document.body.classList.toggle('nav-sm', isNavCollapsed)
+    writeStored('sidebar', isNavCollapsed ? 'collapsed' : 'expanded')
   })
 
   function listen (selector, type, handler) {
@@ -159,14 +157,16 @@
     }
   }
 
+  function navToggles () {
+    return [navToggle1, navToggle2].filter(Boolean)
+  }
+
   function showNav (e) {
-    if (navToggle1.classList.contains('is-active')) return hideNav(e)
-    if (navToggle2.classList.contains('is-active')) return hideNav(e)
+    if (navToggles().some((toggle) => toggle.classList.contains('is-active'))) return hideNav(e)
     trapEvent(e)
     var html = document.documentElement
     html.classList.add('is-clipped--nav')
-    navToggle1.classList.add('is-active')
-    navToggle2.classList.add('is-active')
+    navToggles().forEach((toggle) => toggle.classList.add('is-active'))
     navContainer.classList.add('is-active')
     var bounds = nav.getBoundingClientRect()
     var expectedHeight = window.innerHeight - Math.round(bounds.top)
@@ -178,8 +178,7 @@
     trapEvent(e)
     var html = document.documentElement
     html.classList.remove('is-clipped--nav')
-    navToggle1.classList.remove('is-active')
-    navToggle2.classList.remove('is-active')
+    navToggles().forEach((toggle) => toggle.classList.remove('is-active'))
     navContainer.classList.remove('is-active')
     html.removeEventListener('click', hideNav)
   }
@@ -207,23 +206,50 @@
   }
 
   // Navbar width
+  function clampNavWidth (width) {
+    return Math.min(600, Math.max(250, width))
+  }
+
   function setNavbarWidth (width) {
     document.documentElement.style.setProperty('--nav-width', `${width}px`)
-    if (window.localStorage) window.localStorage.setItem('nav-width', `${width}`)
+    writeStored('nav-width', `${width}`)
   }
+
+  function applyStoredNavWidth () {
+    const width = Number.parseInt(readStored('nav-width'), 10)
+    if (Number.isFinite(width)) {
+      document.documentElement.style.setProperty('--nav-width', `${clampNavWidth(width)}px`)
+    }
+  }
+
+  function readStored (key) {
+    try {
+      return window.localStorage.getItem(key)
+    } catch {
+      return null
+    }
+  }
+
+  function writeStored (key, value) {
+    try {
+      window.localStorage.setItem(key, value)
+    } catch {
+      // storage blocked: the preference applies for this page view only
+    }
+  }
+
   listen('.nav-resize', 'mousedown', (event) => {
+    event.preventDefault()
     document.addEventListener('mousemove', resize, false)
     document.addEventListener(
       'mouseup',
       () => {
         document.removeEventListener('mousemove', resize, false)
       },
-      false
+      { once: true }
     )
   })
   function resize (e) {
-    let value = Math.max(250, e.x)
-    value = Math.min(600, value)
-    setNavbarWidth(value)
+    setNavbarWidth(clampNavWidth(e.x))
   }
 })()

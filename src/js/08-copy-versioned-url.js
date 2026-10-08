@@ -24,12 +24,15 @@
     copyUrl.addEventListener('click', async function (event) {
       const hash = _hash(window)
       const versionedUrl = document.querySelector('meta[name="versioned-url"]')?.content + hash
-      const written = window.navigator.clipboard.writeText(versionedUrl)
+      try {
+        await window.navigator.clipboard.writeText(versionedUrl)
+      } catch {
+        return
+      }
       this.classList.add('copied')
       setTimeout(() => {
         this.classList.remove('copied')
       }, 1500)
-      await written
     })
   }
 
@@ -41,7 +44,7 @@
   // ensure malicious user cannot inject code via URL hash
   function isValidHash (hash) {
     if (!hash || typeof hash !== 'string') return false
-    const isHashRegex = /^#[-.\w]+$/
+    const isHashRegex = /^#[-.\w%]+$/
     return isHashRegex.test(hash)
   }
 })()

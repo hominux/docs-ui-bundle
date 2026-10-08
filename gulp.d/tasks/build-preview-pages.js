@@ -43,7 +43,11 @@ module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, s
       .then(([baseUiModel, layouts]) =>
         vfs
           .src('**/*.adoc', { base: previewSrc, cwd: previewSrc })
-          .pipe(map((file, enc, next) => loadUiModelForPage(file.path).then((page) => next(null, { file, page }), next)))
+          .pipe(
+            map((file, enc, next) =>
+              loadUiModelForPage(file.path).then((page) => next(null, { file, page }), next)
+            )
+          )
           .pipe(
             map(({ file, page = {} }, enc, next) => {
               const siteRootPath = path.relative(ospath.dirname(file.path), ospath.resolve(previewSrc))

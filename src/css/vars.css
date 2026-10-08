@@ -20,7 +20,7 @@
   --body-font-size--desktop: 1.125em; /* 18px */
   --body-font-size--print: 0.9375em; /* 15px */
   --body-line-height: 1.15;
-  --body-font-family: "Open Sans", sans;
+  --body-font-family: "Open Sans", sans-serif;
   --body-font-weight-bold: 600;
   --monospace-font-weight-bold: 600;
 
@@ -94,7 +94,7 @@
   --tabs-font-color: var(--body-font-color);
   --tabs-selected-background-color: var(--selected-background-color);
   --tabs-selected-font-color: var(--body-background-color);
-  --tabs-hover-font-color: var(--hover-link-font-color);
+  --tabs-hover-font-color: var(--link_hover-font-color);
   --tabs-hover-background: var(--color-accent-1);
   --tabs-group-background-color: var(--panel-group-background-color);
 
@@ -200,6 +200,7 @@
   --footer-background: var(--body-background-color);
   --footer-font-color: var(--color-gray-30);
   --footer-link-font-color: #111;
+  --footer-gray-text-color: #6b6b6b;
 
   /* Dimensions and Positioning */
   --navbar-height: calc(83 / var(--rem-base) * 1rem);
@@ -311,7 +312,7 @@ html.dark-theme {
   --nav-muted-color: #aaa;
   --nav-panel-divider-color: rgba(255, 255, 255, 0.2);
   --nav-secondary-background: var(--body-background-color);
-  --navbar-menu-boxshadow: 0 5px 30px 0 rgb(0 0 0 0 / 50%);
+  --navbar-menu-boxshadow: 0 5px 30px 0 rgb(0 0 0 / 50%);
 
   /* Toolbar */
   --toolbar-background: var(--body-background-color);
@@ -328,6 +329,7 @@ html.dark-theme {
   --footer-background: var(--body-background-color);
   --footer-font-color: rgba(255, 255, 255, 0.5);
   --footer-link-font-color: rgba(255, 255, 255, 0.5);
+  --footer-gray-text-color: #b5b5b5;
 }
 
 html.dark-theme .home-link {

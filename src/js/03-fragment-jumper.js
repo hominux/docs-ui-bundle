@@ -5,7 +5,12 @@
   var toolbar = document.querySelector('.header .navbar')
 
   function decodeFragment (hash) {
-    return hash && (~hash.indexOf('%') ? decodeURIComponent(hash) : hash).slice(1)
+    if (!hash) return hash
+    try {
+      return (~hash.indexOf('%') ? decodeURIComponent(hash) : hash).slice(1)
+    } catch {
+      return hash.slice(1)
+    }
   }
 
   function fragmentTarget (hash) {
