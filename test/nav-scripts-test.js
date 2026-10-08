@@ -21,7 +21,7 @@ describe('01-nav', () => {
     <article class="doc"><div class="sect1"><h2 id="section">Section</h2>
       <div class="sect2"><h3 id="deep">Deep</h3></div></div></article>`
 
-  const load = (extra = '', url) => runScript('01-nav.js', html + extra, url)
+  const load = ({ extra = '', url } = {}) => runScript('01-nav.js', html + extra, url)
   const has = (window, selector, cls) => window.document.querySelector(selector).classList.contains(cls)
 
   it('activates the path to the current page', () => {
@@ -71,7 +71,7 @@ describe('01-nav', () => {
     const shown = []
     globalThis.MicroModal = { show: (id) => shown.push(id) }
     try {
-      const window = load('<button id="browse-version"></button>')
+      const window = load({ extra: '<button id="browse-version"></button>' })
       window.document.querySelector('#browse-version').click()
       expect(shown).is.eql(['modal-versions'])
     } finally {
@@ -80,7 +80,7 @@ describe('01-nav', () => {
   })
 
   it('follows the hash to the matching nav item', () => {
-    const window = load('', 'https://docs.example.org/page.html#section')
+    const window = load({ url: 'https://docs.example.org/page.html#section' })
     expect(has(window, '#sibling', 'is-current-page')).is.true()
     expect(has(window, '#current', 'is-current-page')).is.false()
   })

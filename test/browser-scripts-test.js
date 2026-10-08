@@ -40,15 +40,15 @@ describe('05-mobile-navbar', () => {
   })
 })
 
+function toggle (window) {
+  const checkbox = window.document.getElementById('switch-theme-checkbox')
+  checkbox.checked = !checkbox.checked
+  checkbox.dispatchEvent(new window.Event('change'))
+  return checkbox
+}
+
 describe('07-switch-theme', () => {
   const html = '<span><input type="checkbox" id="switch-theme-checkbox"></span>'
-
-  function toggle (window) {
-    const checkbox = window.document.getElementById('switch-theme-checkbox')
-    checkbox.checked = !checkbox.checked
-    checkbox.dispatchEvent(new window.Event('change'))
-    return checkbox
-  }
 
   it('applies and stores the dark theme', () => {
     const window = runScript('07-switch-theme.js', html)
