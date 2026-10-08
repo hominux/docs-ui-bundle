@@ -63,9 +63,9 @@ module.exports = function buildTask (src, dest, preview) {
       preview
         ? () => {}
         : (css, result) =>
-          cssnano()
-            .process(css, result.opts)
-            .then(() => postcssPseudoElementFixer(css, result)),
+            cssnano()
+              .process(css, result.opts)
+              .then(() => postcssPseudoElementFixer(css, result)),
     ]
 
     const output = merge(
