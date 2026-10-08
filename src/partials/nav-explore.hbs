@@ -1,6 +1,8 @@
 <div class="context">
   <span class="title"><a class="nav-title-link" href="{{{relativize page.componentVersion.url}}}">{{> component-logo name=page.component.name class="nav-component-logo"}}<span class="nav-title-text">{{page.component.title}}</span></a></span>
+  {{#if page.versions}}
   <span class="version">{{page.componentVersion.displayVersion}}</span>
+  {{/if}}
   <button class="browse-version" aria-label="Browse versions" id="browse-version">
     <svg
       height="24px"

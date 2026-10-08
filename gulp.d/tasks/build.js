@@ -6,7 +6,6 @@ const concat = require('gulp-concat')
 const cssnano = require('cssnano')
 const fs = require('node:fs')
 const { promises: fsp } = fs
-const imagemin = require('gulp-imagemin')
 const merge = require('merge-stream')
 const ospath = require('node:path')
 const path = ospath.posix
@@ -16,6 +15,7 @@ const postcssImport = require('postcss-import')
 const postcssUrl = require('postcss-url')
 const postcssVar = require('postcss-custom-properties')
 const { Transform } = require('node:stream')
+const { finished } = require('node:stream/promises')
 function map (transform) {
   return new Transform({ objectMode: true, transform })
 }
@@ -29,7 +29,8 @@ const vfs = require('vinyl-fs')
 const git = require('git-rev-sync')
 
 module.exports = function buildTask (src, dest, preview) {
-  return function build () {
+  return async function build () {
+    const { default: imagemin, gifsicle, mozjpeg, optipng, svgo } = await import('gulp-imagemin')
     const opts = { base: src, cwd: src }
     const sourcemaps = preview || process.env.SOURCEMAPS === 'true'
     const postcssPlugins = [
@@ -62,12 +63,12 @@ module.exports = function buildTask (src, dest, preview) {
       preview
         ? () => {}
         : (css, result) =>
-          cssnano()
-            .process(css, result.opts)
-            .then(() => postcssPseudoElementFixer(css, result)),
+            cssnano()
+              .process(css, result.opts)
+              .then(() => postcssPseudoElementFixer(css, result)),
     ]
 
-    return merge(
+    const output = merge(
       vfs
         .src('js/+([0-9])-*.js', { ...opts, read: false, sourcemaps })
         .pipe(bundle(opts))
@@ -92,14 +93,21 @@ module.exports = function buildTask (src, dest, preview) {
           ? through()
           : imagemin(
             [
-              imagemin.gifsicle(),
-              imagemin.jpegtran(),
-              imagemin.optipng(),
-              imagemin.svgo({
+              gifsicle(),
+              mozjpeg(),
+              optipng(),
+              svgo({
                 plugins: [
-                  { cleanupIDs: { preservePrefixes: ['icon-', 'view-'] } },
-                  { removeViewBox: false },
-                  { removeDesc: false },
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        cleanupIds: { preservePrefixes: ['icon-', 'view-'] },
+                        removeViewBox: false,
+                        removeDesc: false,
+                      },
+                    },
+                  },
                 ],
               }),
             ].reduce((accum, it) => (it ? accum.concat(it) : accum), [])
@@ -109,6 +117,7 @@ module.exports = function buildTask (src, dest, preview) {
       vfs.src('layouts/*.hbs', opts),
       vfs.src('partials/*.hbs', opts).pipe(replace('@@antora-ui-version', git.isTagDirty() ? git.long() : git.tag()))
     ).pipe(vfs.dest(dest, { sourcemaps: sourcemaps && '.' }))
+    await finished(output)
   }
 }
 

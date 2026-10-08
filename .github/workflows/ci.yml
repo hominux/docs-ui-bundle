@@ -23,7 +23,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Rebuild image-optimization binaries
-        run: npm rebuild gifsicle optipng-bin jpegtran-bin
+        run: npm rebuild gifsicle optipng-bin mozjpeg
 
       - name: Run tests with coverage gate
         run: npm run coverage
