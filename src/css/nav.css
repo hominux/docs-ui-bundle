@@ -462,3 +462,7 @@ body.nav-sm .nav-panel-menu {
   width: auto;
   border-radius: 0.2rem;
 }
+
+html:not(.dark-theme) .nav-component-logo {
+  filter: drop-shadow(0 0 1px rgba(13, 39, 64, 0.6));
+}
