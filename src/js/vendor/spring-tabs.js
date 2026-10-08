@@ -16,6 +16,8 @@
 ;(function () {
   'use strict'
 
+  let tabCount = 0
+
   addTabs()
   configureTabs()
 
@@ -47,7 +49,7 @@
   }
 
   function createTabsElement (primaryElement) {
-    const tabsElement = createElementFromHtml('<div class="tabs"></div>')
+    const tabsElement = createElementFromHtml('<div class="tabs" role="tablist"></div>')
     primaryElement.prepend(tabsElement)
     return tabsElement
   }
@@ -65,6 +67,12 @@
     tabElement.textContent = title
     tabElement.dataset.blockName = title
     content.dataset.blockName = title
+    const id = ++tabCount
+    tabElement.id = 'tab-' + id
+    tabElement.setAttribute('aria-controls', 'tabpanel-' + id)
+    content.id = 'tabpanel-' + id
+    content.setAttribute('role', 'tabpanel')
+    content.setAttribute('aria-labelledby', 'tab-' + id)
     tabsElement.append(tabElement)
     return { tabElement: tabElement, content: content }
   }
