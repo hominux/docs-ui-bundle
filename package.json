@@ -37,7 +37,6 @@
     "gulp-imagemin": "^9.2.0",
     "gulp-postcss": "~9.0",
     "gulp-replace": "~1.1",
-    "gulp-stylelint": "~13.0",
     "gulp-uglify": "~3.0",
     "gulp-vinyl-zip": "~2.5",
     "handlebars": "~4.7",
@@ -54,8 +53,8 @@
     "postcss-url": "~10.1",
     "require-directory": "~2.1",
     "require-from-string": "~2.0",
-    "stylelint": "~13.13",
-    "stylelint-config-standard": "~22.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^38.0.0",
     "vinyl-fs": "~3.0"
   },
   "dependencies": {

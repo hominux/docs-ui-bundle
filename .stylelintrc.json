@@ -1,0 +1,34 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "comment-empty-line-before": null,
+    "no-descending-specificity": null,
+    "rule-empty-line-before": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": [
+          "BlinkMacSystemFont",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "currentColor",
+          "optimizeLegibility"
+        ]
+      }
+    ],
+    "function-url-quotes": null,
+    "custom-property-pattern": null,
+    "media-feature-range-notation": null,
+    "import-notation": null,
+    "selector-class-pattern": null,
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "alpha-value-notation": null,
+    "keyframes-name-pattern": null,
+    "keyframe-selector-notation": null,
+    "selector-not-notation": null,
+    "shorthand-property-no-redundant-values": null,
+    "declaration-block-no-redundant-longhand-properties": null
+  }
+}
