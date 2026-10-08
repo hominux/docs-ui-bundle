@@ -1,0 +1,8 @@
+language: en-US
+reviews:
+  profile: chill
+  path_filters:
+    - "!node_modules/**"
+    - "!build/**"
+    - "!public/**"
+    - "!package-lock.json"

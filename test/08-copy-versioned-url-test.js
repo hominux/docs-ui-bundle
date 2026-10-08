@@ -18,6 +18,8 @@ describe('08-copy-versioned-url', () => {
   let document
   let window
 
+  let originalSetTimeout
+
   beforeEach(async () => {
     versionedUrl = 'https://docs.spring.io/spring-security/reference/index.html'
     button = {
@@ -82,13 +84,14 @@ describe('08-copy-versioned-url', () => {
         clipboard: clipboard,
       },
     }
+    originalSetTimeout = global.setTimeout
     global.setTimeout = timeout.setTimeout
     global.document = document
     global.window = window
   })
 
   afterEach(async () => {
-    delete global.setTimeout
+    global.setTimeout = originalSetTimeout
     delete global.document
     delete global.window
   })
