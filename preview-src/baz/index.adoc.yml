@@ -1,0 +1,16 @@
+url: /baz/index.html
+component:
+  name: baz
+version: '1.0.0'
+previous:
+  content: Quickstart
+  url: '#'
+  urlType: 'internal'
+next:
+  content: Liber Recusabo
+  url: '#'
+  urlType: 'internal'
+breadcrumbs:
+  - content: Spring Baz
+    url: '#'
+    urlType: fragment

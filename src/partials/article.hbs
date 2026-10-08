@@ -1,28 +1,13 @@
-<article class="doc dark:text-gray-100">
-{{> eol-banner}}
+<article class="doc">
+{{> breadcrumbs}}
+{{> article-latest}}
 {{#with page.title}}
-<h1 class="page mt-8 mb-1">{{{this}}}</h1>
+<h1 id="page-title" class="page">{{{this}}}</h1>
 {{/with}}
-<div class="is-before-toc text-xs text-gray-400 border-b border-gray-300 mb-6 pb-1">
-{{#with (resolvePage page.relativeSrcPath model=false)}}
-{{#with ./asciidoc.attributes}}
-{{#if ./authors}}
-<span>{{./authors}}</span>
-{{/if}}
-{{#if ./revnumber}}
-<span class="before:content-['–_']">{{./version-label}} {{./revnumber}}</span>
-{{/if}}
-{{#if ./revdate}}
-<span class="before:content-['–_']">Last review: {{./revdate}}</span>
-{{/if}}
-{{#if ./revremark}}
-<span class="before:content-['|_']">{{./revremark}}</span>
-{{/if}}
+{{#with (or page.author page.attributes.author)}}
+<p class="page-author">{{this}}</p>
 {{/with}}
-{{/with}}
-</div>
 {{{page.contents}}}
+{{> nav-section-summary}}
 {{> pagination}}
-{{> contributing}}
 </article>
-
