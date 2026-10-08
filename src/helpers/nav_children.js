@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function navChildren (navigation, url) {
-  return findNavigation(navigation[0].items, url)
+  return findNavigation(navigation, url)
 }
 
 function findNavigation (items, url) {

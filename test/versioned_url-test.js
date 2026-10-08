@@ -21,4 +21,12 @@ describe('versioned_url', () => {
     const result = versionedUrl(siteUrl, versionSegment, undefined)
     expect(result).is.eql(undefined)
   })
+  it('when url nests the version segment under a component path', () => {
+    const result = versionedUrl('https://hominux.com/docs', '5.x', '/compress4j/5.x/index.html')
+    expect(result).is.eql('https://hominux.com/docs/compress4j/5.x/index.html')
+  })
+  it('when version segment is undefined', () => {
+    const result = versionedUrl('https://hominux.com/docs', undefined, '/compress4j/next/index.html')
+    expect(result).is.eql('https://hominux.com/docs/compress4j/next/index.html')
+  })
 })
