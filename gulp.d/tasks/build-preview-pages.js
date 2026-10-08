@@ -15,7 +15,9 @@ const yaml = require('js-yaml')
 
 const ASCIIDOC_ATTRIBUTES = { experimental: '', icons: 'font', sectanchors: '', 'source-highlighter': 'highlight.js' }
 
-module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, sink = () => map()) {
+const drain = () => map((file, enc, next) => next())
+
+module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, sink = drain) {
   return function buildPreviewPages (done) {
     return Promise.all([
       loadSampleUiModel(previewSrc),

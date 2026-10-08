@@ -1,9 +1,15 @@
     <script>
-!function (theme, navWidth) {
+!function () {
+  function read (key) {
+    try { return window.localStorage.getItem(key) } catch (e) { return null }
+  }
+  var theme = read('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 'dark')
+  var navWidth = Number.parseInt(read('nav-width'), 10)
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
-  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
-  localStorage && localStorage.getItem('nav-width'))
+  if (Number.isFinite(navWidth)) {
+    document.documentElement.style.setProperty('--nav-width', Math.min(600, Math.max(250, navWidth)) + 'px')
+  }
+}()
     </script>
     <link rel="stylesheet" href="{{{uiRootPath}}}/css/site.css">
     <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/search.css">

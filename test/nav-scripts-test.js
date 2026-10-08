@@ -92,6 +92,18 @@ describe('01-nav', () => {
     expect(has(window, '#sibling', 'is-current-page')).is.true()
   })
 
+  it('escapes special characters in the hash and section ids', () => {
+    const window = load({ extra: '<h2 id="odd]id">Odd</h2>' })
+    window.document
+      .querySelector('#parent .nav-list')
+      .insertAdjacentHTML('beforeend', '<li class="nav-item" id="odd"><a class="nav-link" href="#odd]id">Odd</a></li>')
+    window.location.hash = '#a"b'
+    expect(() => window.dispatchEvent(new window.Event('hashchange'))).to.not.throw()
+    window.location.hash = '#odd]id'
+    window.dispatchEvent(new window.Event('hashchange'))
+    expect(has(window, '#odd', 'is-current-page')).is.true()
+  })
+
   it('applies a stored nav width within bounds', () => {
     const window = new (require('jsdom').JSDOM)(html + '', { url: 'https://docs.example.org/' }).window
     window.localStorage.setItem('nav-width', '9000')
