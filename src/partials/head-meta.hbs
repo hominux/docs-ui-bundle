@@ -5,4 +5,16 @@
     <meta name="versioned-url" content="{{{versioned_url site.url page.componentVersion.versionSegment page.url}}}">
     <meta name="component" content="{{{page.component.name}}}">
     <meta name="latest-version" content="{{~#if (and page.latest (eq page.url page.latest.url))}}true{{~else}}false{{~/if}}">
+    <meta property="og:type" content="website">
+    {{#if site.title}}<meta property="og:site_name" content="{{site.title}}">{{/if}}
+    {{#if page.versions}}
+    <meta property="og:title" content="[{{page.componentVersion.displayVersion}}] {{{detag_attr (or page.title 'Untitled')}}}">
+    {{else}}
+    <meta property="og:title" content="{{{detag_attr (or page.title 'Untitled')}}}">
+    {{/if}}
+    {{#if page.description}}
+    <meta property="og:description" content="{{page.description}}">
+    {{else}}
+    <meta property="og:description" content="Hominux documentation.">
+    {{/if}}
     <meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/{{#if (or (eq page.component.name "compress4j") (eq page.component.name "pact-avro-plugin"))}}{{page.component.name}}-logo.png{{else}}hominux-logo.png{{/if}}">

@@ -1,7 +1,7 @@
 <div class="context">
-  <span class="title"><a class="nav-title-link" href="{{{relativize page.component.url}}}">{{> component-logo name=page.component.name class="nav-component-logo"}}<span class="nav-title-text">{{page.component.title}}</span></a></span>
+  <span class="title"><a class="nav-title-link" href="{{{relativize page.componentVersion.url}}}">{{> component-logo name=page.component.name class="nav-component-logo"}}<span class="nav-title-text">{{page.component.title}}</span></a></span>
   <span class="version">{{page.componentVersion.displayVersion}}</span>
-  <button class="browse-version" id="browse-version">
+  <button class="browse-version" aria-label="Browse versions" id="browse-version">
     <svg
       height="24px"
       id="Layer_1"

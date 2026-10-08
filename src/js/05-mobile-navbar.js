@@ -10,7 +10,9 @@
     document.documentElement.classList.toggle('is-clipped--navbar')
     this.classList.toggle('is-active')
     var menu = document.getElementById(this.dataset.target)
-    if (menu.classList.toggle('is-active')) {
+    var isActive = menu.classList.toggle('is-active')
+    this.setAttribute('aria-expanded', String(isActive))
+    if (isActive) {
       menu.style.maxHeight = ''
       var expectedMaxHeight = window.innerHeight - Math.round(menu.getBoundingClientRect().top)
       var actualMaxHeight = Number.parseInt(window.getComputedStyle(menu).maxHeight, 10)

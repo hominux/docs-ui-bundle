@@ -4,7 +4,7 @@
 {{#with page.title}}
 <h1 id="page-title" class="page">{{{this}}}</h1>
 {{/with}}
-{{#with page.attributes.author}}
+{{#with (or page.author page.attributes.author)}}
 <p class="page-author">{{this}}</p>
 {{/with}}
 {{{page.contents}}}
