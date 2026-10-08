@@ -29,7 +29,7 @@ jobs:
         run: npm run coverage
 
       - name: Audit shipped dependencies
-        run: npm audit --omit=dev
+        run: npm audit --omit=dev --audit-level=low
 
       - name: Build UI bundle
         run: node_modules/.bin/gulp bundle
