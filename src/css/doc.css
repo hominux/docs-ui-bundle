@@ -116,6 +116,10 @@
   color: var(--link-font-color);
 }
 
+.doc p a {
+  text-decoration: underline;
+}
+
 .doc a:hover {
   color: var(--link_hover-font-color);
 }

@@ -71,7 +71,7 @@
       tocMenu = document.createElement('div')
       tocMenu.className = 'toc-menu'
     }
-    var title = document.createElement('h3')
+    var title = document.createElement('h2')
     title.textContent = sidebar.dataset.title || 'Contents'
     tocMenu.appendChild(title)
     tocMenu.appendChild(tocList)
