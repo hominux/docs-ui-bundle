@@ -42,7 +42,7 @@ const lintJsTask = createTask({
 
 const lintTestJsTask = createTask({
   name: 'lint:testjs',
-  desc: 'Lint the JavaScript source files using eslint (JavaScript Standard Style)',
+  desc: 'Lint the JavaScript test files using eslint (JavaScript Standard Style)',
   call: task.lintJs(glob.test),
 })
 

@@ -27,7 +27,7 @@ describe('08-copy-versioned-url', () => {
       },
       addEventListener: function (event, callback) {
         button.click = function () {
-          callback.call(this)
+          return callback.call(this)
         }
       },
       classList: {
@@ -58,6 +58,7 @@ describe('08-copy-versioned-url', () => {
       content: '',
       writeText: function (text) {
         clipboard.content = text
+        return clipboard.failure ? Promise.reject(clipboard.failure) : Promise.resolve()
       },
     }
     meta = {
@@ -105,29 +106,37 @@ describe('08-copy-versioned-url', () => {
 
   it('meta expression is meta[name="versioned-url"]', async () => {
     run()
-    button.click()
+    await button.click()
     expect(meta.expression).eqls('meta[name="versioned-url"]')
   })
 
   it('versioned-url expression undefined]', async () => {
     run()
     document.querySelector = function (q) {}
-    button.click()
+    await button.click()
   })
 
   it('click button adds copied class & timeout clears it', async () => {
     run()
     expect(button.classes).eqls([])
-    button.click()
+    await button.click()
     expect(button.classes).eqls(['copied'])
     expect(timeout.invocations[0].time).eqls(1500)
     timeout.run()
     expect(button.classes).eqls([])
   })
 
+  it('does not show copied when the clipboard write is rejected', async () => {
+    clipboard.failure = new Error('denied')
+    run()
+    await button.click()
+    expect(button.classes).eqls([])
+    expect(timeout.invocations).eqls([])
+  })
+
   it('hash is undefined', async () => {
     run()
-    button.click()
+    await button.click()
     expect(clipboard.content).eqls(versionedUrl)
   })
 
@@ -138,6 +147,7 @@ describe('08-copy-versioned-url', () => {
     ['contains -', '#topic-subtopic', true],
     ['contains _', '#topic_subtopic', true],
     ['contains number', '#topic1_subtopic2', true],
+    ['is percent-encoded', '#section%20name', true],
     ['contains invalid', '#topic<script', false],
   ]
 
@@ -145,7 +155,7 @@ describe('08-copy-versioned-url', () => {
     it(`hash ${title}`, async () => {
       window.location.hash = hash
       run()
-      button.click()
+      await button.click()
       expect(clipboard.content).eqls(accepted ? versionedUrl + hash : versionedUrl)
     })
   })

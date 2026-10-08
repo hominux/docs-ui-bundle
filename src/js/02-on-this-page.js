@@ -32,6 +32,7 @@
       if (location && item.hostname && item.hostname !== location.hostname) {
         item.classList.add('external')
         item.setAttribute('target', '_blank')
+        item.setAttribute('rel', 'noopener noreferrer')
       }
     })
   }

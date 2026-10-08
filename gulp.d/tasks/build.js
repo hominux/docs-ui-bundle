@@ -136,7 +136,7 @@ function bundle ({ base: basedir, ext: bundleExt = '.bundle.js' }) {
           Promise.all(mtimePromises).then((mtimes) => {
             bumpMtime(file.stat, newestMtime(mtimes, file.stat.mtime))
             if (bundleBuffer !== undefined) file.contents = bundleBuffer
-            next(bundleError, Object.assign(file, { path: file.path.slice(0, file.path.length - 10) + '.js' }))
+            next(bundleError, Object.assign(file, { path: file.path.slice(0, -bundleExt.length) + '.js' }))
           }, next)
         )
       return
