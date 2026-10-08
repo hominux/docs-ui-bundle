@@ -39,7 +39,7 @@
     "gulp-concat": "~2.6",
     "gulp-connect": "~5.7",
     "gulp-eslint": "~6.0",
-    "gulp-imagemin": "~6.2",
+    "gulp-imagemin": "^9.2.0",
     "gulp-postcss": "~9.0",
     "gulp-replace": "~1.1",
     "gulp-stylelint": "~13.0",
