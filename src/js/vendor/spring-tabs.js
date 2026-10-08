@@ -25,7 +25,7 @@
     for (const primaryElement of document.querySelectorAll('.primary')) {
       if (primaryElement.querySelector('div.switch')) {
         console.debug('Skipping tabs due to existing blockswitches')
-        return
+        continue
       }
       const tabsElement = createTabsElement(primaryElement)
       const tab = createTab(primaryElement, tabsElement)

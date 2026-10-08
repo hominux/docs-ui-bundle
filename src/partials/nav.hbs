@@ -18,9 +18,9 @@
   </aside>
 </div>
 <script>
-!function (sidebar) {
-  if (sidebar) {
-    document.body.classList.add('nav-sm')
-  }
-}(localStorage && localStorage.getItem('sidebar') === 'close')
+!function () {
+  try {
+    if (window.localStorage.getItem('sidebar') === 'close') document.body.classList.add('nav-sm')
+  } catch (e) {}
+}()
 </script>
