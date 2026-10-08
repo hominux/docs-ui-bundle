@@ -1,0 +1,10 @@
+<ul class="versions">
+  {{#each this}}
+  <li class="version{{#if current}} is-current{{/if}}{{#if latest}} is-latest{{/if}}">
+    <a href="{{{relativize ./url}}}"{{#if current}} aria-current="page"{{/if}}>
+      {{./displayVersion}}
+      {{~#if latest}}<span class="current">latest</span>{{/if}}
+    </a>
+  </li>
+  {{/each}}
+</ul>

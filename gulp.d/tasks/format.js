@@ -3,6 +3,11 @@
 const prettier = require('../lib/gulp-prettier-eslint')
 const vfs = require('vinyl-fs')
 
-module.exports = function format (files) {
-  return () => vfs.src(files).pipe(prettier()).pipe(vfs.dest((file) => file.base))
+module.exports = function formatTask (files) {
+  return function format () {
+    return vfs
+      .src(files)
+      .pipe(prettier())
+      .pipe(vfs.dest((file) => file.base))
+  }
 }

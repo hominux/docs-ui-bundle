@@ -19,6 +19,7 @@ const glob = {
   all: [srcDir, previewSrcDir],
   css: `${srcDir}/css/**/*.css`,
   js: ['gulpfile.js', 'gulp.d/**/*.js', `${srcDir}/{helpers,js}/**/*.js`],
+  test: ['test/**/*.js'],
 }
 
 const cleanTask = createTask({
@@ -27,16 +28,46 @@ const cleanTask = createTask({
   call: task.remove(['build', 'public']),
 })
 
-const lintTask = createTask({
-  name: 'lint',
+const lintCssTask = createTask({
+  name: 'lint:css',
+  desc: 'Lint the CSS source files using stylelint (standard config)',
+  call: task.lintCss(glob.css),
+})
+
+const lintJsTask = createTask({
+  name: 'lint:js',
   desc: 'Lint the JavaScript source files using eslint (JavaScript Standard Style)',
   call: task.lintJs(glob.js),
 })
 
-const formatTask = createTask({
-  name: 'format',
+const lintTestJsTask = createTask({
+  name: 'lint:testjs',
+  desc: 'Lint the JavaScript source files using eslint (JavaScript Standard Style)',
+  call: task.lintJs(glob.test),
+})
+
+const lintTask = createTask({
+  name: 'lint',
+  desc: 'Lint the CSS and JavaScript source files',
+  call: parallel(lintCssTask, lintJsTask, lintTestJsTask),
+})
+
+const formatJsTask = createTask({
+  name: 'format:js',
   desc: 'Format the JavaScript source files using prettify (JavaScript Standard Style)',
   call: task.format(glob.js),
+})
+
+const formatTestJsTask = createTask({
+  name: 'format:testjs',
+  desc: 'Format the JavaScript source files using prettify (JavaScript Standard Style)',
+  call: task.format(glob.test),
+})
+
+const formatTask = createTask({
+  name: 'format',
+  desc: 'Lint the CSS and JavaScript source files',
+  call: parallel(formatJsTask, formatTestJsTask),
 })
 
 const buildTask = createTask({
@@ -99,6 +130,12 @@ const previewTask = createTask({
   call: series(previewBuildTask, previewServeTask),
 })
 
+const generateOcticons = createTask({
+  name: 'generateOcticons',
+  desc: 'Generates an SVG file with the octicons we use',
+  call: task.generateOcticons(),
+})
+
 module.exports = exportTasks(
   bundleTask,
   cleanTask,
@@ -109,5 +146,6 @@ module.exports = exportTasks(
   bundlePackTask,
   previewTask,
   previewBuildTask,
-  packTask
+  packTask,
+  generateOcticons
 )
