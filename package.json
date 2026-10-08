@@ -4,8 +4,8 @@
   "license": "MPL-2.0",
   "scripts": {
     "start": "gulp preview",
-    "test": "_mocha",
-    "coverage": "c8 --check-coverage --lines 90 --branches 85 --reporter=text _mocha"
+    "test": "mocha",
+    "coverage": "c8 --check-coverage --lines 90 --branches 85 --reporter=text mocha"
   },
   "engines": {
     "node": ">=24"
@@ -25,7 +25,7 @@
     "chai-fs": "~2.0",
     "chai-spies": "~1.0",
     "core-js": "~3.26",
-    "cssnano": "~5.1",
+    "cssnano": "^7.1.9",
     "dirty-chai": "~2.0",
     "eslint": "~6.8",
     "eslint-config-standard": "~14.1",
@@ -35,9 +35,9 @@
     "eslint-plugin-standard": "~4.0",
     "fancy-log": "~2.0",
     "git-rev-sync": "^3.0.2",
-    "gulp": "~4.0",
+    "gulp": "^5.0.1",
     "gulp-concat": "~2.6",
-    "gulp-connect": "~5.7",
+    "gulp-connect": "^5.7.0",
     "gulp-eslint": "~6.0",
     "gulp-imagemin": "^9.2.0",
     "gulp-postcss": "~9.0",
@@ -50,9 +50,9 @@
     "js-yaml": "~4.1",
     "merge-stream": "~2.0",
     "micromodal": "^0.4.10",
-    "mocha": "~10.8",
-    "postcss": "~8.4",
-    "postcss-calc": "~8.2",
+    "mocha": "^12.0.3",
+    "postcss": "^8.5.29",
+    "postcss-calc": "^10.1.1",
     "postcss-custom-properties": "~12.1",
     "postcss-import": "~15.0",
     "postcss-url": "~10.1",
