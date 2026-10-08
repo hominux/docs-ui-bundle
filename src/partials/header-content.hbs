@@ -69,9 +69,12 @@
   </nav>
 </header>
 <script>
-!function (theme) {
+!function () {
+  var theme
+  try { theme = window.localStorage.getItem('theme') } catch (e) {}
+  theme = theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 'dark')
   if (theme === 'dark') {
     document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
   }
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+}()
 </script>

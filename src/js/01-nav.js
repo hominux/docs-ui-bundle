@@ -94,7 +94,7 @@
     var id = node.id
     // NOTE: look for section heading
     if (!id && SECT_CLASS_RX.test(node.className)) id = node.firstElementChild?.id
-    return id ? menuPanel.querySelector('.nav-link[href="#' + id + '"]') : null
+    return id ? menuPanel.querySelector('.nav-link[href="#' + CSS.escape(id) + '"]') : null
   }
 
   function findAncestorNavLink (targetNode) {
@@ -109,7 +109,7 @@
   }
 
   function findHashNavLink (hash) {
-    var navLink = menuPanel.querySelector('.nav-link[href="' + hash + '"]')
+    var navLink = menuPanel.querySelector('.nav-link[href="#' + CSS.escape(hash.slice(1)) + '"]')
     if (navLink) return navLink
     var targetNode = document.getElementById(hash.slice(1))
     return targetNode ? findAncestorNavLink(targetNode) : undefined
