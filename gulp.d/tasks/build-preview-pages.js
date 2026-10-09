@@ -1,6 +1,6 @@
 'use strict'
 
-const Asciidoctor = require('@asciidoctor/core')()
+const Asciidoctor = require('@asciidoctor/core')
 const fs = require('node:fs')
 const { promises: fsp } = fs
 const handlebars = require('handlebars')
@@ -51,38 +51,43 @@ module.exports = function buildPreviewPagesTask (src, previewSrc, previewDest, s
             )
           )
           .pipe(
-            map(({ file, page = {} }, enc, next) => {
-              const siteRootPath = path.relative(ospath.dirname(file.path), ospath.resolve(previewSrc))
-              const uiModel = { ...baseUiModel }
-              const sharedPageModel = page.component ? baseUiModel.shared[page.component.name][page.version] : {}
-              uiModel.page = { ...uiModel.page, ...sharedPageModel, ...page }
-              uiModel.siteRootPath = siteRootPath
-              uiModel.siteRootUrl = path.join(siteRootPath, 'index.html')
-              uiModel.uiRootPath = path.join(siteRootPath, '_')
-              if (file.stem === '404') {
-                uiModel.page = { layout: '404', title: 'Page Not Found' }
-              } else {
-                const doc = Asciidoctor.load(file.contents, { safe: 'safe', attributes: ASCIIDOC_ATTRIBUTES })
-                uiModel.page.attributes = Object.entries(doc.getAttributes())
-                  .filter(([name, val]) => name.startsWith('page-'))
-                  .reduce((accum, [name, val]) => {
-                    accum[name.slice(5)] = val
-                    return accum
-                  }, {})
-                uiModel.page.layout = doc.getAttribute('page-layout', 'default')
-                if (doc.hasAttribute('docrole')) uiModel.page.role = doc.getAttribute('docrole')
-                uiModel.page.title = doc.getDocumentTitle()
-                uiModel.page.contents = Buffer.from(doc.convert())
-              }
-              file.extname = '.html'
+            map(async ({ file, page = {} }, enc, next) => {
               try {
-                file.contents = Buffer.from(layouts.get(uiModel.page.layout)(uiModel))
-                next(null, file)
+                const siteRootPath = path.relative(ospath.dirname(file.path), ospath.resolve(previewSrc))
+                const uiModel = { ...baseUiModel }
+                const sharedPageModel = page.component ? baseUiModel.shared[page.component.name][page.version] : {}
+                uiModel.page = { ...uiModel.page, ...sharedPageModel, ...page }
+                uiModel.siteRootPath = siteRootPath
+                uiModel.siteRootUrl = path.join(siteRootPath, 'index.html')
+                uiModel.uiRootPath = path.join(siteRootPath, '_')
+                if (file.stem === '404') {
+                  uiModel.page = { layout: '404', title: 'Page Not Found' }
+                } else {
+                  const doc = await Asciidoctor.load(file.contents, { safe: 'safe', attributes: ASCIIDOC_ATTRIBUTES })
+                  uiModel.page.attributes = Object.entries(doc.attributes)
+                    .filter(([name, val]) => name.startsWith('page-'))
+                    .reduce((accum, [name, val]) => {
+                      accum[name.slice(5)] = val
+                      return accum
+                    }, {})
+                  uiModel.page.layout = doc.getAttribute('page-layout', 'default')
+                  if (doc.hasAttribute('docrole')) uiModel.page.role = doc.getAttribute('docrole')
+                  uiModel.page.title = doc.getDocumentTitle()
+                  uiModel.page.contents = Buffer.from(await doc.convert())
+                }
+                file.extname = '.html'
+                try {
+                  file.contents = Buffer.from(layouts.get(uiModel.page.layout)(uiModel))
+                  next(null, file)
+                } catch (e) {
+                  next(transformHandlebarsError(e, uiModel.page.layout))
+                }
               } catch (e) {
-                next(transformHandlebarsError(e, uiModel.page.layout))
+                next(e)
               }
             })
           )
+          .on('error', done)
           .pipe(vfs.dest(previewDest))
           .on('error', done)
           .pipe(sink())
@@ -145,8 +150,8 @@ function compileLayouts (src) {
 
 function copyImages (src, dest) {
   return vfs
-    .src('**/*.{png,svg}', { base: src, cwd: src })
-    .pipe(vfs.dest(dest))
+    .src('**/*.{png,svg}', { base: src, cwd: src, encoding: false })
+    .pipe(vfs.dest(dest, { encoding: false }))
     .pipe(map((file, enc, next) => next()))
 }
 

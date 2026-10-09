@@ -262,7 +262,7 @@ mark {
 }
 
 .doc td.tableblock > .content {
-  word-wrap: unset;
+  overflow-wrap: unset;
 }
 
 .doc table.frame-all,

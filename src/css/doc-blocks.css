@@ -26,7 +26,7 @@
   padding: 1rem 1rem 0.75rem;
   background: var(--admonition-background);
   width: 100%;
-  word-wrap: anywhere;
+  overflow-wrap: anywhere;
 }
 
 .doc .admonitionblock td.icon {

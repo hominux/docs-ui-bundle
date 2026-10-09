@@ -12,9 +12,9 @@ const path = ospath.posix
 const postcss = require('gulp-postcss')
 const postcssCalc = require('postcss-calc')
 const postcssImport = require('postcss-import')
-const postcssUrl = require('postcss-url')
 const postcssVar = require('postcss-custom-properties')
-const { Transform } = require('node:stream')
+const postcssUrl = require('postcss-url')
+const { Readable, Transform } = require('node:stream')
 const { finished } = require('node:stream/promises')
 function map (transform) {
   return new Transform({ objectMode: true, transform })
@@ -32,7 +32,7 @@ const svgoConfig = require('../lib/svgo-config')
 module.exports = function buildTask (src, dest, preview) {
   return async function build () {
     const { default: imagemin, gifsicle, mozjpeg, optipng, svgo } = await import('gulp-imagemin')
-    const opts = { base: src, cwd: src }
+    const opts = { base: src, cwd: src, encoding: false }
     const sourcemaps = preview || process.env.SOURCEMAPS === 'true'
     const postcssPlugins = [
       postcssImport,
@@ -57,8 +57,7 @@ module.exports = function buildTask (src, dest, preview) {
           },
         },
       ]),
-      // NOTE importFrom is for supplemental CSS files
-      postcssVar({ disableDeprecationNotice: true, importFrom: path.join(src, 'css', 'vars.css'), preserve: true }),
+      postcssVar({ preserve: true }),
       preview ? postcssCalc : () => {},
       autoprefixer,
       preview
@@ -88,7 +87,7 @@ module.exports = function buildTask (src, dest, preview) {
       vfs
         .src(['css/site.css', 'css/vendor/*.css'], { ...opts, sourcemaps })
         .pipe(postcss((file) => ({ plugins: postcssPlugins, options: { file } }))),
-      vfs.src('font/*.{ttf,woff*(2)}', opts),
+      Readable.from(vfs.src('font/*.{ttf,woff*(2)}', opts)),
       vfs.src('img/**/*.{gif,ico,jpg,png,svg}', opts).pipe(
         preview
           ? through()
@@ -101,10 +100,10 @@ module.exports = function buildTask (src, dest, preview) {
             ].reduce((accum, it) => (it ? accum.concat(it) : accum), [])
           )
       ),
-      vfs.src('helpers/*.js', opts),
-      vfs.src('layouts/*.hbs', opts),
+      Readable.from(vfs.src('helpers/*.js', opts)),
+      Readable.from(vfs.src('layouts/*.hbs', opts)),
       vfs.src('partials/*.hbs', opts).pipe(replace('@@antora-ui-version', git.isTagDirty() ? git.long() : git.tag()))
-    ).pipe(vfs.dest(dest, { sourcemaps: sourcemaps && '.' }))
+    ).pipe(vfs.dest(dest, { sourcemaps: sourcemaps && '.', encoding: false }))
     await finished(output)
   }
 }
