@@ -60,6 +60,16 @@ const ratio = (a, b) => {
 
 const PAIRS = [
   ['body-font-color', 'body-background-color'],
+  ['body-font-light-color', 'body-background-color'],
+  ['link-font-color', 'body-background-color'],
+  ['link-font-color', 'panel-background-color'],
+  ['link_hover-font-color', 'body-background-color'],
+  ['toc-active-font-color', 'selected-background-color'],
+  ['badge-font-color', 'badge-background'],
+  ['navbar-font-color', 'navbar-background'],
+  ['navbar-menu-font-color', 'navbar-menu-background'],
+  ['footer-gray-text-color', 'footer-background'],
+  ['mark-font-color', 'mark-background-color'],
   ['quote-font-color', 'quote-background'],
   ['abstract-font-color', 'abstract-background'],
 ]
