@@ -74,3 +74,15 @@ describe('focus indicators', () => {
     expect(css).to.match(/\.header :is\([^)]*\):focus-visible \{\s*outline-color: #fff !important;/)
   })
 })
+
+describe('code-block toolbox', () => {
+  const css = () => src('css/spring/spring-doc.css')
+
+  it('shows the toolbox while a button inside it has keyboard focus', () => {
+    expect(css()).to.match(/\.doc pre\.highlight:focus-within \.source-toolbox \{\s*opacity: 1;/)
+  })
+
+  it('keeps the toolbox visible on devices that cannot hover', () => {
+    expect(css()).to.match(/@media \(hover: none\) \{\s*\.doc \.source-toolbox \{\s*opacity: 1;/)
+  })
+})

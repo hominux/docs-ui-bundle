@@ -70,6 +70,16 @@ mark {
   border-color: var(--pre-annotation-font-color);
 }
 
+.doc pre.highlight:focus-within .source-toolbox {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .doc .source-toolbox {
+    opacity: 1;
+  }
+}
+
 .doc .source-toolbox > :not(:last-child)::after {
   content: unset;
 }
