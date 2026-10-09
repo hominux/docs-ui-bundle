@@ -102,9 +102,17 @@ module.exports = function buildTask (src, dest, preview) {
       ),
       Readable.from(vfs.src('helpers/*.js', opts)),
       Readable.from(vfs.src('layouts/*.hbs', opts)),
-      vfs.src('partials/*.hbs', opts).pipe(replace('@@antora-ui-version', git.isTagDirty() ? git.long() : git.tag()))
+      vfs.src('partials/*.hbs', opts).pipe(replace('@@antora-ui-version', uiVersion()))
     ).pipe(vfs.dest(dest, { sourcemaps: sourcemaps && '.', encoding: false }))
     await finished(output)
+  }
+}
+
+function uiVersion () {
+  try {
+    return git.isTagDirty() ? git.long() : git.tag()
+  } catch {
+    return process.env.GITHUB_SHA || 'unknown'
   }
 }
 

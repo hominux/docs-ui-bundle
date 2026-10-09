@@ -66,7 +66,7 @@ const formatTestJsTask = createTask({
 
 const formatTask = createTask({
   name: 'format',
-  desc: 'Lint the CSS and JavaScript source files',
+  desc: 'Format the JavaScript source and test files',
   call: parallel(formatJsTask, formatTestJsTask),
 })
 
