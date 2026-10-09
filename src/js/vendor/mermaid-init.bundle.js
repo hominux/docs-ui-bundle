@@ -9,9 +9,27 @@
   if (!self) return
   var library = document.createElement('script')
   library.src = self.src.replace(/mermaid-init\.js(?=$|[?#])/, 'mermaid.js')
-  library.onload = render
+  library.onload = start
   document.head.appendChild(library)
 
+  var diagrams = []
+  var renders = 0
+
+  function start () {
+    diagrams = blocks.map(function (code, idx) {
+      var host = code.closest('.listingblock .content') || code.closest('pre')
+      var div = document.createElement('div')
+      div.className = 'mermaid'
+      div.id = 'mermaid-diagram-' + idx
+      host.parentNode.replaceChild(div, host)
+      return { element: div, source: code.textContent }
+    })
+    render()
+    var toggle = document.getElementById('switch-theme-checkbox')
+    if (toggle) toggle.addEventListener('change', render)
+  }
+
+  // Mermaid cannot restyle a drawn SVG, so a theme change draws every diagram again from its source.
   function render () {
     var isDark = document.documentElement.classList.contains('dark-theme')
     window.mermaid.initialize({
@@ -19,16 +37,10 @@
       theme: isDark ? 'dark' : 'default',
       securityLevel: 'strict',
     })
-
-    blocks.forEach(function (code, idx) {
-      var wrapper = code.closest('.listingblock') || code.closest('pre')
-      var div = document.createElement('div')
-      div.className = 'mermaid'
-      div.id = 'mermaid-diagram-' + idx
-      div.textContent = code.textContent
-      wrapper.parentNode.replaceChild(div, wrapper)
+    diagrams.forEach(function (diagram) {
+      window.mermaid.render('mermaid-svg-' + renders++, diagram.source).then(function (result) {
+        diagram.element.innerHTML = result.svg
+      })
     })
-
-    window.mermaid.run({ querySelector: '.mermaid' })
   }
 })()
