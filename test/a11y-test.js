@@ -20,7 +20,8 @@ describe('accessibility', () => {
   })
 
   it('underlines inline links in running text', () => {
-    expect(src('css/doc.css')).to.match(/\.doc p a \{\s*text-decoration: underline;/)
+    const rule = /\.doc p a,\s*\.doc td a,\s*\.doc li a,\s*\.doc dd a \{\s*text-decoration: underline;/
+    expect(src('css/doc.css')).to.match(rule)
   })
 })
 

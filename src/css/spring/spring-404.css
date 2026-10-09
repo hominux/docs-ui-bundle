@@ -16,5 +16,5 @@ body.status-404 .strong {
   font-weight: bold;
 }
 body.status-404 a {
-  color: #086dc3;
+  color: var(--link-font-color);
 }

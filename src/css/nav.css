@@ -180,7 +180,7 @@
 }
 
 .nav-link:hover {
-  color: #06c;
+  color: var(--nav-link-hover-font-color);
 }
 
 .nav-link:hover,
@@ -196,7 +196,7 @@
 
 .dark-theme .nav-link:hover,
 .dark-theme .nav-text:hover {
-  color: #1f98ff;
+  color: var(--nav-link-hover-font-color);
   background: #262a2d;
 }
 
@@ -260,8 +260,8 @@ html.dark-theme button.browse-version:hover {
 
 .nav-panel-menu .context .version {
   display: inline-block;
-  background-color: var(--mark-background-color);
-  color: #111;
+  background-color: var(--badge-background);
+  color: var(--badge-font-color);
   align-items: center;
   border-radius: 4px;
   font-size: calc(12 / var(--rem-base) * 1rem);

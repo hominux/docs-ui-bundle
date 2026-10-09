@@ -105,6 +105,39 @@ describe('02-on-this-page', () => {
     expect(local.classList.contains('external')).is.false()
   })
 
+  describe('own-links meta', () => {
+    const links = [
+      'https://site.example.org/x/',
+      'https://docs.site.example.org/x',
+      'https://github.com/Org/repo',
+      'https://github.com/Org',
+      'https://github.com/someone/else',
+      'https://github.com/Org-fork/repo',
+      'https://evilsite.example.org/x',
+      'https://site.example.org.evil.example/x',
+    ]
+    const page = (meta) => {
+      const anchors = links.map((l) => `<a href="${l}">l</a>`).join('')
+      const article = `<article class="doc"><p>x</p>${anchors}</article>`
+      return `<head>${meta}</head><body><div class="content">${article}</div></body>`
+    }
+    const targets = (window) => [...window.document.querySelectorAll('article a')].map((a) => a.getAttribute('target'))
+
+    it('keeps listed hosts and path prefixes in the same tab', () => {
+      const meta = '<meta name="own-links" content="site.example.org, github.com/Org">'
+      const window = runScript('02-on-this-page.js', page(meta))
+      expect(targets(window)).is.eql([null, null, null, null, '_blank', '_blank', '_blank', '_blank'])
+      const own = window.document.querySelector('article a')
+      expect(own.classList.contains('external')).is.true()
+      expect(own.getAttribute('rel')).is.null()
+    })
+
+    it('opens every other site in a new tab when the meta is absent', () => {
+      const window = runScript('02-on-this-page.js', page(''))
+      expect(targets(window).every((t) => t === '_blank')).is.true()
+    })
+  })
+
   it('removes the sidebar when the page has no headings', () => {
     const page = '<div class="content"><article class="doc"><p>x</p></article></div><div class="toc"></div>'
     const window = runScript('02-on-this-page.js', page)

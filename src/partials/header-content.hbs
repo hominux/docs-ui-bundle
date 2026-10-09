@@ -2,8 +2,8 @@
   <nav class="navbar" aria-label="Main">
     <div class="navbar-brand">
       <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}">
-        <img id="hominuxlogo" class="block" src="{{{uiRootPath}}}/img/hominux-logo.png" alt="">
-        <span class="navbar-title">Hominux</span>
+        <img id="brand-logo" class="block" src="{{{uiRootPath}}}/img/{{or site.keys.logo 'hominux-logo.png'}}" alt="">
+        <span class="navbar-title">{{or site.title 'Hominux'}}</span>
       </a>
       <button class="navbar-burger" aria-label="Toggle navigation" aria-expanded="false" data-target="topbar-nav">
         <span></span>
@@ -17,12 +17,14 @@
           <a class="navbar-link" href="#">Projects</a>
           <div class="navbar-dropdown">
             {{#each site.components}}
+            {{#unless (eq ./name "home")}}
             <a class="navbar-item" href="{{{relativize ./url}}}">{{> component-logo name=./name class="navbar-project-logo"}}{{./title}}</a>
+            {{/unless}}
             {{/each}}
           </div>
         </div>
-        <a class="navbar-item" href="https://hominux.com/#community">Community</a>
-        <a class="navbar-item" href="https://github.com/hominux">GitHub</a>
+        <a class="navbar-item" href="{{or site.keys.communityUrl 'https://hominux.com/#community'}}">Community</a>
+        <a class="navbar-item" href="{{or site.keys.githubUrl 'https://github.com/hominux'}}">GitHub</a>
         <div id="search-field" class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs" aria-label="Search docs">
           <label class="filter"><input type="checkbox" data-facet-filter="component:{{page.component.name}}"> <span>This project</span></label>

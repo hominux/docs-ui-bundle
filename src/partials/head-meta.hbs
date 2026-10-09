@@ -15,6 +15,7 @@
     {{#if page.description}}
     <meta property="og:description" content="{{page.description}}">
     {{else}}
-    <meta property="og:description" content="Hominux documentation.">
+    <meta property="og:description" content="{{or site.title 'Hominux'}} documentation.">
     {{/if}}
-    <meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/{{#if (component_logo page.component.name)}}{{component_logo page.component.name}}{{else}}hominux-logo.png{{/if}}">
+    <meta property="og:image" content="{{ site.url }}{{ site.ui.url }}/img/{{#if (component_logo page.component.name)}}{{component_logo page.component.name}}{{else}}{{or site.keys.socialImage 'hominux-logo.png'}}{{/if}}">
+    {{#if site.keys.ownLinks}}<meta name="own-links" content="{{site.keys.ownLinks}}">{{/if}}

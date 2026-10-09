@@ -31,9 +31,23 @@
       const location = window.location
       if (location && item.hostname && item.hostname !== location.hostname) {
         item.classList.add('external')
+        if (isOwnLink(item)) return
         item.setAttribute('target', '_blank')
         item.setAttribute('rel', 'noopener noreferrer')
       }
+    })
+  }
+
+  // <meta name="own-links"> lists hosts or host/path prefixes that open in the same tab
+  function isOwnLink (item) {
+    const meta = document.querySelector('meta[name="own-links"]')
+    const prefixes = meta ? meta.content.split(',').map((p) => p.trim()).filter(Boolean) : []
+    return prefixes.some(function (prefix) {
+      const slash = prefix.indexOf('/')
+      const host = slash < 0 ? prefix : prefix.slice(0, slash)
+      const path = slash < 0 ? '' : prefix.slice(slash)
+      if (item.hostname !== host && !item.hostname.endsWith('.' + host)) return false
+      return !path || item.pathname === path || item.pathname.startsWith(path + '/')
     })
   }
 
