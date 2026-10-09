@@ -28,4 +28,8 @@ describe('versioned_url', () => {
     const result = versionedUrl('https://hominux.com/docs', undefined, '/compress4j/next/index.html')
     expect(result).is.eql('https://hominux.com/docs/compress4j/next/index.html')
   })
+
+  it('omits the prefix when the site url is undefined', () => {
+    expect(versionedUrl(undefined, '1.0', '/docs/1.0/index.html')).is.eql('/docs/1.0/index.html')
+  })
 })

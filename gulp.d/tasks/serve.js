@@ -23,7 +23,7 @@ function decorateLog (_, app) {
       const replacement = '$1://localhost$2' + (localIp ? ` and $1://${localIp}$2` : '')
       msg = msg.replace(URL_RX, replacement)
     }
-    _log(msg)
+    _log.call(app, msg)
   }
   return []
 }

@@ -402,10 +402,6 @@ html.dark-theme button.browse-version:hover {
   }
 }
 
-body.nav-sm .nav-panel-menu {
-  overflow: visible;
-}
-
 @media screen and (min-width: 769px) {
   .nav-container {
     width: var(--nav-width);
@@ -465,4 +461,10 @@ body.nav-sm .nav-panel-menu {
 
 html:not(.dark-theme) .nav-component-logo {
   filter: drop-shadow(0 0 1px rgba(13, 39, 64, 0.6));
+}
+
+@media screen and (min-width: 1024px) {
+  body.nav-sm .nav-panel-menu {
+    overflow: visible;
+  }
 }

@@ -36,5 +36,5 @@ jobs:
           tag_name: latest
           name: Latest UI bundle
           prerelease: true
-          body: Automatically published from the latest commit on main. Not a versioned release -- this tag is overwritten on every push.
+          body: Each push to main publishes this bundle and overwrites the previous one. This is not a versioned release.
           files: build/ui-bundle.zip

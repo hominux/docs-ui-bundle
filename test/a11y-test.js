@@ -44,3 +44,23 @@ describe('nav-explore version badge', () => {
     expect(render(page)).to.not.include('class="version"')
   })
 })
+
+describe('collapsed sidebar', () => {
+  it('only lets the menu panel overflow at desktop widths so the mobile drawer keeps scrolling', () => {
+    const css = src('css/nav.css')
+    expect(css).to.not.match(/^body\.nav-sm \.nav-panel-menu \{/m)
+    const scoped = /@media screen and \(min-width: 1024px\) \{\s*body\.nav-sm \.nav-panel-menu \{\s*overflow: visible;/
+    expect(css).to.match(scoped)
+  })
+})
+
+describe('partial includes', () => {
+  it('leaves no partial references that the bundle does not ship', () => {
+    const partials = fs.readdirSync(path.join(__dirname, '../src/partials'))
+    const shipped = new Set(partials.map((file) => file.replace(/\.hbs$/, '')))
+    partials.forEach((file) => {
+      const used = [...src(`partials/${file}`).matchAll(/\{\{>\s*([\w-]+)/g)].map((match) => match[1])
+      used.forEach((name) => expect(shipped.has(name), `${file} includes missing partial ${name}`).is.true())
+    })
+  })
+})

@@ -8,7 +8,7 @@ RUN npm install -g --ignore-scripts gulp-cli@3.1.0
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts && npm rebuild gifsicle optipng-bin mozjpeg
 
-COPY gulpfile.js .gulp.json .stylelintrc .eslintrc ./
+COPY gulpfile.js .gulp.json .stylelintrc.json eslint.config.js ./
 COPY gulp.d gulp.d
 COPY src src
 COPY preview-src preview-src
