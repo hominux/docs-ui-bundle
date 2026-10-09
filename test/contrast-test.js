@@ -16,8 +16,19 @@ const block = (selector) => {
   throw new Error(`unterminated block for ${selector}`)
 }
 
+const declaration = (line) => {
+  const colon = line.indexOf(':')
+  return [line.slice(2, colon).trim(), line.slice(colon + 1).replace(/;$/, '').trim()]
+}
+
 const declarations = (body) =>
-  Object.fromEntries([...body.matchAll(/--([\w-]+):([^;]+);/g)].map((m) => [m[1], m[2].trim()]))
+  Object.fromEntries(
+    body
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('--') && line.endsWith(';'))
+      .map(declaration)
+  )
 
 const light = declarations(block(':root {'))
 const dark = { ...light, ...declarations(block('html.dark-theme {')) }
