@@ -27,6 +27,7 @@ const through = () =>
 const uglify = require('gulp-uglify')
 const vfs = require('vinyl-fs')
 const git = require('git-rev-sync')
+const svgoConfig = require('../lib/svgo-config')
 
 module.exports = function buildTask (src, dest, preview) {
   return async function build () {
@@ -96,20 +97,7 @@ module.exports = function buildTask (src, dest, preview) {
               gifsicle(),
               mozjpeg(),
               optipng(),
-              svgo({
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: {
-                        cleanupIds: { preservePrefixes: ['icon-', 'view-'] },
-                        removeViewBox: false,
-                        removeDesc: false,
-                      },
-                    },
-                  },
-                ],
-              }),
+              svgo(svgoConfig),
             ].reduce((accum, it) => (it ? accum.concat(it) : accum), [])
           )
       ),
