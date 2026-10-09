@@ -24,7 +24,7 @@ body {
   line-height: var(--body-line-height);
   margin: 0;
   tab-size: 4;
-  word-wrap: anywhere; /* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
+  overflow-wrap: anywhere; /* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
 }
 
 a {
@@ -97,7 +97,7 @@ summary:focus-visible {
 
 table {
   border-collapse: collapse;
-  word-wrap: normal; /* table widths aren't computed as expected when word-wrap is enabled */
+  overflow-wrap: normal; /* table widths aren't computed as expected when word-wrap is enabled */
 }
 
 object[type="image/svg+xml"]:not([width]) {
