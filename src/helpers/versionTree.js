@@ -1,58 +1,36 @@
 'use strict'
 
-module.exports = function versionTreeHelper (components, page) {
-  return versionTree(components, page)
+module.exports = function versionTree (components, page) {
+  const pageUrls = Object.fromEntries((page?.versions ?? []).map((v) => [v.displayVersion, v.url]))
+  return Object.fromEntries(
+    Object.entries(components).map(([key, component]) => [key, withTree(component, page, pageUrls)])
+  )
 }
 
-function versionTree (components, page) {
-  const versionToUrl = {}
-  if (page?.versions) {
-    page.versions.forEach((v) => {
-      versionToUrl[v.displayVersion] = v.url
-    })
-  }
-  for (const [, component] of Object.entries(components)) {
-    const samePageComponent = Boolean(component && page?.component) && component.name === page.component.name
-    const componentVersionToUrl = samePageComponent ? versionToUrl : {}
-    component.versionTree = splitVersions(
-      component.versions,
-      componentVersionToUrl,
-      currentVersion(component, page),
-      component.latest
-    )
-  }
-  return components
+function withTree (component, page, pageUrls) {
+  const samePage = Boolean(page?.component) && component.name === page.component.name
+  const current = samePage ? page.componentVersion?.displayVersion : undefined
+  const tree = splitVersions(component.versions, samePage ? pageUrls : {}, current, component.latest)
+  return { ...component, versionTree: tree }
 }
 
-function currentVersion (component, page) {
-  return page?.component && page.componentVersion && component.name === page.component.name
-    ? page.componentVersion.displayVersion
-    : undefined
-}
+const isSnapshot = (v) => v.displayVersion.includes('SNAPSHOT')
+const isPrerelease = (v) => (v.prerelease === undefined ? v.displayVersion.includes('-') : Boolean(v.prerelease))
 
-function splitVersions (versions, versionToUrl, current, latest) {
-  const toNav = (v) => navVersion(v, versionToUrl, current, latest)
-  const snapshot = versions.filter((v) => v.displayVersion.includes('SNAPSHOT')).map(toNav)
-  const stable = versions.filter((v) => !v.displayVersion.includes('-')).map(toNav)
-  const preview = versions
-    .filter((v) => !v.displayVersion.includes('SNAPSHOT') && v.displayVersion.includes('-'))
-    .map(toNav)
+function splitVersions (versions, urls, current, latest) {
+  const nav = (list) => list.map((v) => navVersion(v, urls, current, latest))
   return {
-    snapshot: snapshot.length > 0 ? snapshot : null,
-    stable: stable.length > 0 ? stable : null,
-    preview: preview.length > 0 ? preview : null,
+    snapshot: nav(versions.filter(isSnapshot)),
+    stable: nav(versions.filter((v) => !isSnapshot(v) && !isPrerelease(v))),
+    preview: nav(versions.filter((v) => !isSnapshot(v) && isPrerelease(v))),
   }
 }
 
-function navVersion (v, versionToUrl, current, latest) {
-  const navVersion = {
-    url: v.url,
+function navVersion (v, urls, current, latest) {
+  return {
+    url: urls[v.displayVersion] ?? v.url,
     displayVersion: v.displayVersion,
     latest: Boolean(latest) && v.version === latest.version,
     current: v.displayVersion === current,
   }
-  if (versionToUrl[v.displayVersion]) {
-    navVersion.url = versionToUrl[v.displayVersion]
-  }
-  return navVersion
 }

@@ -147,3 +147,13 @@ object[type="image/svg+xml"]:not([width]) {
     background-color: var(--scrollbar_hover-thumb-color);
   }
 }
+
+/* Class selectors elsewhere set outline: none on controls; keyboard users still need a visible focus ring. */
+:is(a, button, input, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--link-font-color) !important;
+  outline-offset: 2px;
+}
+
+.header :is(a, button, input, [tabindex]):focus-visible {
+  outline-color: #fff !important;
+}

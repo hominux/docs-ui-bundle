@@ -64,3 +64,12 @@ describe('partial includes', () => {
     })
   })
 })
+
+describe('focus indicators', () => {
+  it('forces a visible outline on keyboard focus even where components remove it', () => {
+    const css = src('css/base.css')
+    const ring = /:is\(a, button, input, summary, \[tabindex\]\):focus-visible \{\s*outline: 2px solid [^;]*!important;/
+    expect(css).to.match(ring)
+    expect(css).to.match(/\.header :is\([^)]*\):focus-visible \{\s*outline-color: #fff !important;/)
+  })
+})

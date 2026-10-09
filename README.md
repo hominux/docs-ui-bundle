@@ -35,8 +35,8 @@ Open [localhost:5252](http://localhost:5252).
 ## Component logos
 
 The nav title and the version modal show a logo per component. Logos live in `src/img/<component-name>-logo.png`
-(for example `compress4j-logo.png`), and `src/partials/component-logo.hbs` lists the component names that have one.
-Add the image, then add the component name to that partial.
+(for example `compress4j-logo.png`), and `src/helpers/component_logo.js` lists the component names that have one.
+Add the image, then add the component name to that list. The nav, the version modal and the `og:image` meta all read it.
 
 ## License
 
