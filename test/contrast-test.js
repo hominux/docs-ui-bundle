@@ -17,7 +17,7 @@ const block = (selector) => {
 }
 
 const declarations = (body) =>
-  Object.fromEntries([...body.matchAll(/--([\w-]+):\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]))
+  Object.fromEntries([...body.matchAll(/--([\w-]+):([^;]+);/g)].map((m) => [m[1], m[2].trim()]))
 
 const light = declarations(block(':root {'))
 const dark = { ...light, ...declarations(block('html.dark-theme {')) }
@@ -38,7 +38,7 @@ const hex = (theme, name) => {
 }
 
 const channel = (color, i) => {
-  const c = parseInt(color.slice(1 + i * 2, 3 + i * 2), 16) / 255
+  const c = Number.parseInt(color.slice(1 + i * 2, 3 + i * 2), 16) / 255
   return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
 }
 const luminance = (color) => 0.2126 * channel(color, 0) + 0.7152 * channel(color, 1) + 0.0722 * channel(color, 2)
