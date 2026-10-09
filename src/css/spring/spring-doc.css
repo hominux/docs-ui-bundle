@@ -39,6 +39,7 @@
 
 mark {
   background: var(--mark-background-color);
+  color: var(--mark-font-color);
 }
 
 /* Use '#' for on header hovers and tweak position */

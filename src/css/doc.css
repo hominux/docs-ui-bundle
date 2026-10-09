@@ -116,7 +116,10 @@
   color: var(--link-font-color);
 }
 
-.doc p a {
+.doc p a,
+.doc td a,
+.doc li a,
+.doc dd a {
   text-decoration: underline;
 }
 

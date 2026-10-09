@@ -48,6 +48,10 @@
   --scrollbar-thumb-color: silver;
   --scrollbar_hover-thumb-color: silver;
   --mark-background-color: #cfe3f7;
+  --mark-font-color: #191e1e;
+  --badge-background: #cfe3f7;
+  --badge-font-color: #111;
+  --nav-link-hover-font-color: #06c;
   --selected-background-color: #191e1e;
   --caption-font-style: italic;
 
@@ -269,6 +273,10 @@ html.dark-theme {
   --link_hover-font-color: #9acbf7;
   --scrollbar-thumb-color: #5f5f5f;
   --mark-background-color: #5b9bd5;
+  --mark-font-color: #111;
+  --badge-background: #5b9bd5;
+  --badge-font-color: #111;
+  --nav-link-hover-font-color: #1f98ff;
   --selected-background-color: #e5e5e5;
 
   /* Admonitions */

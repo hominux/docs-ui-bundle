@@ -1,11 +1,13 @@
 <footer class="footer flex">
-  <div id="hominux-links">
-    <p class="smallest antialiased">Copyright © {{year}} Hominux. Released under open-source licenses.</p>
+  <div id="brand-links">
+    <p class="smallest antialiased">Copyright © {{year}} {{or site.title 'Hominux'}}. Released under open-source licenses.</p>
     <p class="smallest antialiased">
-      <a href="https://github.com/hominux">GitHub</a> ·
-      <a href="https://github.com/hominux/.github/blob/main/SECURITY.md">Security</a> ·
-      <a href="https://github.com/hominux/.github/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a> ·
-      <a href="https://github.com/hominux/.github/blob/main/SUPPORT.md">Support</a>
+      {{#with (or site.keys.githubUrl 'https://github.com/hominux') as |org|}}
+      <a href="{{org}}">GitHub</a> ·
+      <a href="{{org}}/.github/blob/main/SECURITY.md">Security</a> ·
+      <a href="{{org}}/.github/blob/main/CODE_OF_CONDUCT.md">Code of conduct</a> ·
+      <a href="{{org}}/.github/blob/main/SUPPORT.md">Support</a>
+      {{/with}}
     </p>
   </div>
 </footer>

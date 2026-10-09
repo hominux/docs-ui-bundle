@@ -47,7 +47,7 @@
   margin: 0 auto;
 }
 
-#hominuxlogo {
+#brand-logo {
   height: 1.75rem;
   width: auto;
   margin-right: 0.5rem;
@@ -58,7 +58,7 @@
   font-weight: 600;
 }
 
-footer #hominux-links a:hover {
+footer #brand-links a:hover {
   color: var(--link-font-color);
   text-decoration: underline;
 }
@@ -242,7 +242,7 @@ html.dark-theme #modal-versions .version-toggle span {
 
 #modal-versions .current {
   background-color: var(--mark-background-color);
-  color: #111;
+  color: var(--mark-font-color);
   align-items: center;
   border-radius: 4px;
   display: inline-block;

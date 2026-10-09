@@ -82,8 +82,8 @@ module.exports = function buildTask (src, dest, preview) {
       vfs
         .src('js/vendor/*.min.js', opts)
         .pipe(map((file, enc, next) => next(null, Object.assign(file, { extname: '' }, { extname: '.js' })))),
-      // NOTE use the next line to bundle a JavaScript library that cannot be browserified, like jQuery
-      //vfs.src(require.resolve('<package-name-or-require-path>'), opts).pipe(concat('js/vendor/<library-name>.js')),
+      // mermaid.min.js is a global IIFE that browserify cannot bundle; copy it as-is.
+      vfs.src(require.resolve('mermaid/dist/mermaid.min.js'), opts).pipe(concat('js/vendor/mermaid.js')),
       vfs
         .src(['css/site.css', 'css/vendor/*.css'], { ...opts, sourcemaps })
         .pipe(postcss((file) => ({ plugins: postcssPlugins, options: { file } }))),

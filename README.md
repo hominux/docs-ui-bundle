@@ -32,6 +32,29 @@ $ npx gulp preview
 
 Open [localhost:5252](http://localhost:5252).
 
+## Rebrand it without forking
+
+The bundle reads its brand from the playbook, so another site can reuse it and overlay its own files with Antora's
+`ui.supplemental_files`. All keys are optional; the defaults give the Hominux brand. Antora camel-cases key names for templates (`own_links` becomes `site.keys.ownLinks`).
+
+```yaml
+site:
+  title: ZirekHQ                 # nav title, footer name, og:site_name, og:description
+  keys:
+    logo: zirekhq-logo.png       # file in the bundle's img/ (supply it as supplemental-ui/img/zirekhq-logo.png)
+    social_image: social-preview.png
+    github_url: https://github.com/ZirekHQ   # header and footer links (the footer links its .github repo)
+    community_url: https://zirekhq.github.io/#help-wanted
+    own_links: zirekhq.github.io,github.com/ZirekHQ   # hosts or host/path prefixes that open in the same tab
+    extra_css: css/zirek.css     # stylesheet loaded after site.css; overrides the tokens in vars.css
+ui:
+  supplemental_files: ./supplemental-ui
+```
+
+Supplemental files skip PostCSS, so `extra_css` must be plain CSS with no `var()` fallbacks. Override the colour
+tokens in `vars.css` (`:root` for light, `html.dark-theme` for dark) and keep every pair in `test/contrast-test.js`
+at 4.5:1. Replace `favicon*`, `*-logo.png` and `helpers/component_logo.js` by shipping a file at the same path.
+
 ## Component logos
 
 The nav title and the version modal show a logo per component. Logos live in `src/img/<component-name>-logo.png`
