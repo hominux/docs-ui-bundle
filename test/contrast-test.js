@@ -65,7 +65,7 @@ const PAIRS = [
 ]
 
 describe('colour tokens', () => {
-  ;[['light', light], ['dark', dark]].forEach(([themeName, theme]) => {
+  Object.entries({ light, dark }).forEach(([themeName, theme]) => {
     PAIRS.forEach(([fg, bg]) => {
       it(`${themeName}: ${fg} on ${bg} is at least 4.5:1`, () => {
         expect(ratio(hex(theme, fg), hex(theme, bg)), `${fg} on ${bg}`).to.be.at.least(4.5)
