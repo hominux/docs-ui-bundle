@@ -16,7 +16,7 @@
                         </div>
 
                         
-                        {{~#if (notEmpty ./versionTree.stable)}}
+                        {{~#if ./versionTree.stable}}
                         <div class="version-item is-active">
                           <div>
                             <button class="version-toggle" type="button">
@@ -28,7 +28,7 @@
                         </div>
                         {{/if}}
 
-                        {{~#if (notEmpty ./versionTree.preview)}}
+                        {{~#if ./versionTree.preview}}
                         <div class="version-item">
                           <div>
                             <button class="version-toggle" type="button">
@@ -40,7 +40,7 @@
                         </div>
                         {{/if}}
 
-                        {{~#if (notEmpty ./versionTree.snapshot)}}
+                        {{~#if ./versionTree.snapshot}}
                         <div class="version-item">
                           <div>
                             <button class="version-toggle" type="button">

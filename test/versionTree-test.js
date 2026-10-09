@@ -48,8 +48,43 @@ describe('versionTree', () => {
 
   it('should return an empty structure', () => {
     const tree = treeOf({ test: { versions: [] } })
-    expect(tree.stable).is.eql(null)
-    expect(tree.preview).is.eql(null)
-    expect(tree.snapshot).is.eql(null)
+    expect(tree.stable).is.eql([])
+    expect(tree.preview).is.eql([])
+    expect(tree.snapshot).is.eql([])
+  })
+
+  it('classifies by the prerelease flag, not by the display text', () => {
+    const versions = [
+      { displayVersion: 'Next', prerelease: true },
+      { displayVersion: '2024-LTS', prerelease: false },
+      { displayVersion: '1.0.0.RC1', prerelease: 'RC1' },
+      { displayVersion: '2.0.0-SNAPSHOT', prerelease: true },
+    ]
+    const tree = treeOf({ test: { versions } })
+
+    expectVersions(tree.stable, ['2024-LTS'])
+    expectVersions(tree.preview, ['Next', '1.0.0.RC1'])
+    expectVersions(tree.snapshot, ['2.0.0-SNAPSHOT'])
+  })
+
+  it('does not mutate the components it receives', () => {
+    const components = { test: { name: 'test', versions: [version('1.0.0')] } }
+    const result = versionTree(components, undefined)
+
+    expect(components.test).to.not.have.property('versionTree')
+    expect(result.test.versionTree.stable).has.length(1)
+  })
+
+  it('marks the latest and current versions', () => {
+    const versions = [{ displayVersion: '2.0', version: '2.0' }, { displayVersion: '1.0', version: '1.0' }]
+    const tree = versionTree(
+      { test: { name: 'test', versions, latest: versions[0] } },
+      { component: { name: 'test' }, componentVersion: { displayVersion: '1.0' }, versions: [] }
+    ).test.versionTree
+
+    expect(tree.stable.map((v) => [v.displayVersion, v.latest, v.current])).is.eql([
+      ['2.0', true, false],
+      ['1.0', false, true],
+    ])
   })
 })

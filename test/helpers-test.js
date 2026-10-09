@@ -42,9 +42,11 @@ describe('logic helpers', () => {
     expect(helper('not')('')).is.true()
   })
 
-  it('notEmpty only rejects null', () => {
-    expect(helper('notEmpty')(null)).is.false()
-    expect(helper('notEmpty')('')).is.true()
+  it('component_logo maps known components to their logo file', () => {
+    expect(helper('component_logo')('compress4j')).is.eql('compress4j-logo.png')
+    expect(helper('component_logo')('pact-avro-plugin')).is.eql('pact-avro-plugin-logo.png')
+    expect(helper('component_logo')('other')).is.undefined()
+    expect(helper('component_logo')(undefined)).is.undefined()
   })
 })
 
