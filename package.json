@@ -63,7 +63,7 @@
   "overrides": {
     "cross-spawn": "^7.0.6",
     "sha.js": "^2.4.12",
-    "decode-uri-component": "^0.4.1",
+    "decode-uri-component": "^0.5.0",
     "http-cache-semantics": "^4.2.1",
     "semver-regex": "^4.0.5",
     "send": "^1.0.0"
